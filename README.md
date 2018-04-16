@@ -37,6 +37,9 @@ or
 wget https://raw.githubusercontent.com/svn2github/word2vec/master/questions-words.txt
 ```
 
+# みんなの進捗
+![progress](./progress.png)
+
 ## 100knock2018 (English)  
 We will work NLP 100 knockings as the study meeting for the newcomers in 2018.  
 Let's solve the 10 questions every week!  
