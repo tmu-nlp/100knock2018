@@ -37,7 +37,7 @@ or
 wget https://raw.githubusercontent.com/svn2github/word2vec/master/questions-words.txt
 ```
 
-#みんなの進捗
+# みんなの進捗
 ![progress](./progress.png)
 
 ## 100knock2018 (English)  
