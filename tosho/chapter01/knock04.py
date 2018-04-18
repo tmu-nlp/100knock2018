@@ -9,7 +9,7 @@ s = s.replace('.', '')
 m = {}
 for i, word in enumerate(s.split(' ')):
     if i in one_words:
-        key = word[1]
+        key = word[0]
     else:
         key = word[:2]
     
