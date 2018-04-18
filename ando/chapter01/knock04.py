@@ -1,3 +1,5 @@
+import re
+
 genso = {}
 w = "Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can."
 w = re.sub('[,|.]',"",w)
