@@ -1,4 +1,3 @@
-import re
 import random
 
 s = "I couldn't believe that I could actually understand what I was reading : the phenomenal power of the human mind ."
@@ -8,6 +7,7 @@ for w in s.split(' '):
         w = w[0] + ''.join(random.sample(w[1:-1], len(w) - 2)) + w[-1]
     res.append(w)
 res = ' '.join(res)
+
 
 print(res)
 
@@ -19,3 +19,6 @@ print(res)
 
 # 実行結果
 # I cn'duolt biveele that I could aalcltuy ueatnsdnrd what I was rdinaeg : the paoennmehl power of the human mind .
+
+# 闇（ワンライナー）
+# import random; print(' '.join(w if len(w) <= 4 else w[0] + ''.join(random.sample(w[1:-1], len(w) - 2)) + w[-1] for w in s.split(' ')))
