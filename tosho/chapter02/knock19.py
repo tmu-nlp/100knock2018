@@ -14,7 +14,9 @@ if __name__ == '__main__':
         ret[word] += 1
     
     for word, count in ret.items():
-        print(f'{word}')
-    
+        print(f'{word} : {count}')
+
     print('----------')
-    print(f'{len(ret)} words')
+    print(f'{len(ret)} words : {sum(ret.values())} occurences')
+
+    
