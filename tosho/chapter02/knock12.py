@@ -1,22 +1,36 @@
 import argparse
+import sys
+
+# cut command
+# http://tech.nikkeibp.co.jp/it/article/COLUMN/20060228/231159/
+
+# equivalent
+# cut -f 1 hightemp.txt > col1.txt
+# cut -f 2 hightemp.txt > col2.txt
+
+# usage
+# python knock11.py -f 1 2 -o col1.txt col2.txt
 
 newline = '\n'
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('file')
+    parser.add_argument('-f', '--fields', action='store', type=int, nargs='+', required=True)
+    parser.add_argument('-o', '--output', action='store', type=str, nargs='+', required=True)
     arg = parser.parse_args()
 
-    with open(arg.file, 'r') as f:
-        with open('col1.txt', 'w') as c1:
-            with open('col2.txt', 'w') as c2:
-                for line in f:
-                    words = line.split('\t')
-                    c1.write(words[0] + newline)
-                    c2.write(words[1] + newline)
+    if len(arg.fields) != len(arg.output):
+        print('bad files or output length')
+        sys.exit(1)
 
-# cut コマンド
-# http://www.atmarkit.co.jp/ait/articles/1610/31/news026.html
-# equals to following cmds:
-# cut -f 1 hightemp.txt > col1.txt
-# cut -f 2 hightemp.txt > col2.txt
+    # 入力は1起点なので、0起点に変換する
+    fields = [(i - 1) for i in arg.fields]
+    outputs = [open(o, 'w') for o in arg.output]
+    n = len(arg.fields)
+
+    with open(arg.file, 'r') as f:
+        for line in f:
+            words = line.split('\t')
+            for i in range(n):
+                outputs[i].write(words[fields[i]] + newline)
