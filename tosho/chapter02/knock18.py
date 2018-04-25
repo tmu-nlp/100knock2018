@@ -1,4 +1,5 @@
 import argparse
+import sys
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -6,9 +7,10 @@ if __name__ == '__main__':
     arg = parser.parse_args()
 
     with open(arg.file, 'r') as f:
-        temps = list(map(lambda line: float(line.split('\t')[2]), f))
+        lines = sorted(f, 
+            key=lambda line: float(line.split('\t')[2]),
+            reverse=True
+        )
 
-    sorted(temps)
-
-    for t in temps:
-        print(t)
+    for line in lines:
+        sys.stdout.write(line)
