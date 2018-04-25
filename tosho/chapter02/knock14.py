@@ -1,8 +1,13 @@
 import argparse
-import sys
 
-# python knock14.py -n N file
-# select first N lines in given file
+# head command
+# http://tech.nikkeibp.co.jp/it/article/COLUMN/20060227/230794/
+
+# equivalent
+# head -n 10 hightemp.txt
+
+# usage
+# python knock14.py -n 10 hightemp.txt
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -12,9 +17,5 @@ if __name__ == '__main__':
     arg = parser.parse_args()
 
     with open(arg.file, 'r') as f:
-        remains = arg.n
-        for line in f:
-            sys.stdout.write(line)
-            remains -= 1
-            if remains <= 0:
-                break
+        for line in f.read().splitlines()[:arg.n]:
+            print(line)

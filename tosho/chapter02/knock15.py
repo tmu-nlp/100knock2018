@@ -1,8 +1,13 @@
 import argparse
-import sys
 
-# python knock15.py -n N file
-# select last N lines in given file
+# tail command
+# http://tech.nikkeibp.co.jp/it/article/COLUMN/20060227/230794/
+
+# equivalent
+# tail -n 10 hightemp.txt
+
+# usage
+# python knock15.py -n 10 hightemp.txt
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -12,9 +17,5 @@ if __name__ == '__main__':
     arg = parser.parse_args()
 
     with open(arg.file, 'r') as f:
-        remains = arg.n
-        for line in f.read().splitlines()[::-1]:
-            sys.stdout.write(line + '\n')
-            remains -= 1
-            if remains <= 0:
-                break
+        for line in f.read().splitlines()[-1*(arg.n):]:
+            print(line)

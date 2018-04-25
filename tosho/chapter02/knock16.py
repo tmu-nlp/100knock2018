@@ -1,10 +1,14 @@
 import argparse
-import sys
 
+# split command
 # http://www.atmarkit.co.jp/ait/articles/1711/24/news016.html
-# split -n file
+# - split command on macos does not have -n option...
 
-# 余った部分は最後のファイルに書き出します。
+# equivalent
+# split -n 5 hightemp.txt
+
+# usage
+# python knock16.py -n 5 hightemp.txt
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -16,12 +20,15 @@ if __name__ == '__main__':
     with open(arg.file, 'r') as f:
         blocks = arg.n
         lines = list(f)
-        lines_per_block = int(len(lines) / blocks)
-        for b_index in range(0, blocks):
-            with open(f'out{b_index}.txt', 'w') as o:
-                start_pos = b_index * lines_per_block
-                end_pos = (b_index + 1) * lines_per_block
-                # 最後のファイルにあまりを出力する
-                if b_index == (blocks - 1):
-                    end_pos = len(lines)
-                o.writelines(lines[start_pos:end_pos])
+
+        # 各ブロックに割り当てる行数を計算する
+        # できるだけ均一に配分するようにする
+        lines_in_blocks = [int(len(lines)/blocks) for i in range(blocks)]
+        for i in range(len(lines) % blocks):
+            lines_in_blocks[i] += 1
+        # 累計を計算して、各ブロックの始点を特定する
+        positions = [(sum(lines_in_blocks[:i])) for i in range(blocks)]
+
+        for index, pos, amount in zip(range(blocks), positions, lines_in_blocks):
+            with open(f'out{index}.txt', 'w') as o:
+                o.writelines(lines[pos:(pos+amount)])
