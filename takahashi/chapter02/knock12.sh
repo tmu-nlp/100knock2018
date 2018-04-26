@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-filename='test12.txt'
+filename='../data/hightemp.txt'
 col1='col1.txt'
 col2='col2.txt'
 # -fで取得したいフィールドを設定する

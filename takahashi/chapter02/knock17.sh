@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-cat 'test17.txt' | sort | uniq
+cat '../data/hightemp.txt' | sort | uniq
