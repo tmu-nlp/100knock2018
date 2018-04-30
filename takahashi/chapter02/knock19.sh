@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-cut -f 1 < 'test19.txt' | sort | uniq -c | sort -k1,1 -r
+cut -f 1 < '../data/hightemp.txt' | sort | uniq -c | sort -k1,1 -r

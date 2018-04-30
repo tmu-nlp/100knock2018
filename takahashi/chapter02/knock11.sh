@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-filename='test11.txt'
+filename='../data/hightemp.txt'
 # タブ、スペースまとめて両方変えたい場合はsed
 cat $filename | sed -e s/'¥t'/' '/
 # お手軽なのはtr

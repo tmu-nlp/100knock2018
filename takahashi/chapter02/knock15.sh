@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-tail -3 'test15.txt'
+tail -3 '../data/hightemp.txt'

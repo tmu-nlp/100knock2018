@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-head -3 'test14.txt'
+head -3 '../data/hightemp.txt'
