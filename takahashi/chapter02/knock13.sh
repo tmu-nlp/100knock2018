@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-filename='test13.txt'
+filename='../data/hightemp.txt'
 col1='col1.txt'
 col2='col2.txt'
 
