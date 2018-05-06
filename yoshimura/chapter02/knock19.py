@@ -5,8 +5,11 @@ file = open(file_name,"r")
 
 dic = {}
 
+# 一列めだけのリストを作成
 lines = file.readlines()
-for line in lines:
+list_pre = [line.split("\t")[0] for line in lines]
+
+for line in list_pre:
     if line not in dic:
         dic[line] = 1
     else:
