@@ -19,15 +19,13 @@ if __name__ == '__main__':
     with open(arg.file, 'r') as f:
         lines = sorted(list(f.read().splitlines()))
     
-    keys = []
-    count = 0
+    keys = set()
     for line in lines:
         words = line.split('\t')
         key = words[arg.k - 1]
 
-        if key not in keys:
-            keys.append(key)
-            count += 1
-            
-    print(count)
+        keys.add(key)
+        
+    for k in sorted(keys):
+        print(k)
 
