@@ -19,7 +19,7 @@ if __name__ == '__main__':
     for word in words:
         ret[word] += 1
     
-    for word, count in sorted(ret.items(), key=lambda item: -item[1]):
+    for word, count in sorted(ret.items(), key=lambda item: item[1], reverse=True):
         print(f'{count} {word}')
 
 
