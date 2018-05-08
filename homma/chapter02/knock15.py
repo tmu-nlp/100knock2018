@@ -3,15 +3,24 @@ import sys
 
 def tail(filename, n):
     '末尾からN行を出力'
-    lines = open(filename, encoding='utf-8').readlines()
-    for line in lines[-n:]:
-        print(line.strip())
+    # lines = open(filename, encoding='utf-8').readlines()
+    # for line in lines[-n:]:
+    #     print(line.strip())
+    length = sum(1 for _ in open(filename, encoding='utf-8'))
+
+    for i, line in enumerate(open(filename, encoding='utf-8')):
+        if i >= length - n:
+            yield line.strip()
+
+    # return [line.strip() for i, line in enumerate(open(filename, encoding='utf-8')) if i >= length - n]
 
 
 if __name__ == "__main__":
     fn = sys.argv[1]
     n = int(sys.argv[2])
-    tail(fn, n)
+    # tail(fn, n)
+    for line in tail(fn, n):
+        print(line)
 
 
 # 15. 末尾のN行を出力
@@ -19,7 +28,7 @@ if __name__ == "__main__":
 # 確認にはtailコマンドを用いよ．
 
 # Unix command
-# head hightemp.txt -n5
+# tail hightemp.txt -n5
 
 # 実行結果
 # 埼玉県  鳩山    39.9    1997-07-05
