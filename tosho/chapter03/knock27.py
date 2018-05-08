@@ -41,9 +41,9 @@ def remove_em(text):
 def remove_internal_link(text):
     '''
     内部リンクを削除する
-    https://regex101.com/r/Y1BDbs/1/
+    https://regex101.com/r/Y1BDbs/2/
     '''
-    text = re.sub(r'\[\[(.+\|)?(.+)\]\]', r'\2', text)
+    text = re.sub(r'\[\[([^\[\]\|]+\|)?([^\[\]]+)\]\]', r'\2', text)
     return text
 
 if __name__ == '__main__':
