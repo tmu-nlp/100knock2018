@@ -1,6 +1,26 @@
 import re
 
-pattern = re.compile(r'^\|(.+)\s=(.+)$')
+pattern = re.compile(r'''
+                        ^
+                        \|
+                        (.+)
+                        \s
+                        =
+                        (.+)
+                        $
+                        ''',re.VERBOSE)
+
+# [[記事名]]	
+# [[記事名|表示文字]]	
+# [[記事名#節名|表示文字]] 
+pattern2 = re.compile(r'''
+                        \[\[
+                        (?:
+                            [^|]*?
+                            \|
+                        )*?
+                        ([^|]*?)
+                        \]\]''',re.VERBOSE)
 
 info_dict = {}
 with open('Briten.txt','r',encoding = 'utf-8') as read_file:
@@ -10,15 +30,12 @@ with open('Briten.txt','r',encoding = 'utf-8') as read_file:
             # 強調マークアップを除去
             removed = re.sub(r'\'{2,5}','',match.group(2)) 
             # MediaWikiマークアップの除去
-            for m in re.finditer(r'\[\[(.+?)\]\]',removed):
-                match1 = re.search(r'\|(.+)',m.group(1))
-                if match1:
-                    removed = re.sub(m.group(),match1.group(1),removed)
-                else:
-                    removed = re.sub(m.group(),m.group(1),removed)
+            removed = pattern2.sub(r'\1',removed)
 
             info_dict[match.group(1)] = removed
 
-
 for key, value in info_dict.items():
     print(key, value)
+
+
+#Briten.txtに正規表現をかけると最長マッチになるのはなぜ
