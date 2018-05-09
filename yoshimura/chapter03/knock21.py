@@ -1,15 +1,13 @@
 import re
 
-pattern = re.compile(r'^(.*\[\[Category:.*\]\].*)$', re.MULTILINE)
+# [[Category:ヘルプ|はやみひよう]]
+pattern = re.compile(r'''^\[\[Category:.*\]\]$''')
 
 with open('Briten.txt','r', encoding= 'utf-8') as read_file:
-    lines = read_file.read()
-    result = pattern.findall(lines)    
-
-for line in result:
-    print(line)
-
+    for line in read_file:
+        match = pattern.search(line)
+        if match:
+            print(match.group(0))
 
 # MULTILINEは複数行にマッチ
 # re.MULTILINEでpylintのerrorがでる
-
