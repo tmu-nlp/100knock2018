@@ -1,7 +1,7 @@
 from knock20 import query_article
 import re
 
-prog_category = re.compile(r'==([=]*) ([^\s]+) ([=]*)==')
+prog_category = re.compile(r'==([=]*)([^=]+)([=]*)==')
 
 if __name__ == '__main__':
     count = 0
@@ -10,7 +10,7 @@ if __name__ == '__main__':
         for m in prog_category.findall(text):
             count += 1
             level = len(m[0]) + 1
-            header = m[1]
+            header = m[1].strip(' ')
             print(f'{header} : {level}')
     print(f'{count} headers')
 

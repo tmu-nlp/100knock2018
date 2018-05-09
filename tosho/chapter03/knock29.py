@@ -4,7 +4,6 @@ import json
 import requests
 import html
 from collections import defaultdict
-import argparse
 
 pattern = r'(?<rec>{{(?:[^{}]+|(?&rec))*}})'
 prog = re.compile(pattern)
@@ -132,19 +131,14 @@ def retrieve_flag_url(info):
     return info
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('country')
-    arg = parser.parse_args()
-
     for article in query_article():
         text = article['text']
-        if article['title'] == arg.country:
-            for m in prog.findall(text):
-                if '基礎情報' not in m:
-                    continue
-                info = parse_basic_info(m)
-                retrieve_flag_url(info)
-                print(f'{article["title"]} | {info["国旗画像"]}')
+        for m in prog.findall(text):
+            if '基礎情報' not in m:
+                continue
+            info = parse_basic_info(m)
+            retrieve_flag_url(info)
+            print(info["国旗画像"])
 
 '''
 https://ja.wikipedia.org/wiki/Help:%E6%97%A9%E8%A6%8B%E8%A1%A8
