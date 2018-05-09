@@ -85,7 +85,7 @@ def remove_br(text):
     '''
     <br /> / <br> を削除する
     '''
-    text = re.sub(r'<br(.*?)>', '\n', text)
+    text = re.sub(r'<br(.*?)>', ' ', text)
     return text
 
 def remove_ref(text):
@@ -94,7 +94,8 @@ def remove_ref(text):
     <ref /> => ''
     https://regex101.com/r/btERYK/1
     '''
-    text = re.sub(r'<ref[^>]*>([^<]*)(</ref>)?', r' \1', text)
+    text = re.sub(r'<ref[^>]*>', r' ', text)
+    text = re.sub(r'</ref>', r'', text)
     return text
 
 if __name__ == '__main__':
@@ -107,7 +108,7 @@ if __name__ == '__main__':
             info = parse_basic_info(m)
             count += 1
             for key, value in info.items():
-                print(f'{article["title"]} | {key} = {value}')
+                print(f'{key} | {value}')
     print(f'{count} templates')
 
 '''

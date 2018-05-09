@@ -39,7 +39,8 @@ if __name__ == '__main__':
                 continue
             info = parse_basic_info(m)
             count += 1
-            print(info)
+            for key, value in info.items():
+                print(f'{key} | {value}')
     print(f'{count} templates')
 
 '''
