@@ -15,4 +15,4 @@ if __name__ == '__main__':
     with open(arg.file, 'r') as f:
         for line in f:
             o = line.replace('\t', ' ')
-            sys.stdout.write(o)
+            print(o, end='')    # end引数で末尾に付与する文字を入れれる。
