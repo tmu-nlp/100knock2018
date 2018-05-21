@@ -9,6 +9,16 @@ base_index = 6
 pos_index = 0
 pos1_index = 1
 
+def filter_mecab_result(filename, predicator):
+    '''
+    filter  Morph型のインスタンスを引数にとり、bool型を返すラムダ式
+    '''
+    for morphs in iterate_mecab_morphs(filename):
+        for m in morphs:
+            if predicator(m) == True:
+                yield m
+
+
 def iterate_mecab_morphs(filename):
     with open(filename, 'r') as f:
         morphs = []
