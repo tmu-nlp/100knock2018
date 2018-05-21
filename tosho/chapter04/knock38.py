@@ -16,6 +16,6 @@ if __name__ == '__main__':
 
     occurences = words.values()
 
-    plt.hist(occurences, bins=100)
+    plt.hist(occurences, bins=100, log=True)
     plt.title(f'出現頻度ごとの単語誤り数(最大頻度:{max(occurences)})')
     plt.show()
