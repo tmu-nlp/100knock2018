@@ -5,6 +5,7 @@ class Morph:
         self.pos = None     # 品詞
         self.pos1 = None    # 品詞細分類１
     
+    # definition of == (equals)
     def __eq__(self, other):
         if isinstance(self, other.__class__):
             return self.surface == other.surface and \
