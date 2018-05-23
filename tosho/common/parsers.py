@@ -11,20 +11,41 @@ pos1_index = 1
 
 def iterate_cabocha(filename):
     with open(filename, 'r') as f:
-        morphs = []
+        chunks = []
+        morphs = None   # 現在解析中の文節の形態素リスト（chunk.morphsへのポインタ）
+        edges = []
         for line in f:
-            if line.startswith('*'):
-                continue
             line = line.strip('\n')
             if line.upper() == 'EOS':
                 # 文末に達した場合は、それまでの解析結果を返す
-                yield morphs
-                morphs = []
+                # todo: edges をまとめて、chunks をアップデートする
+                # print(edges)
+                for edge in edges:
+                    src = edge[0]
+                    dst = edge[1]
+
+                    if dst > -1:
+                        dst_chunk = chunks[dst]
+                        dst_chunk.srcs.append(src)
+                        # print(f'{dst_chunk} | {edge} | {dst_chunk.srcs}')
+
+                yield chunks
+                chunks = []
+                edges = []
+            elif line.startswith('*'):
+                tags = line.split(' ')
+                chunk_id = int(tags[1])
+                dst_id = int(tags[2].replace('D', ''))
+
+                chunk = Chunk(chunk_id, dst=dst_id, srcs=[], morphs=[])
+                chunks.append(chunk)
+                morphs = chunk.morphs
+                edges.append((chunk_id, dst_id))
             else:
                 morph = parse_mecab_line(line)
                 morphs.append(morph)
         # 最後の文の形態素リストを返す
-        yield morphs
+        yield chunks
 
 
 def filter_mecab_result(filename, predicator):

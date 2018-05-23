@@ -9,9 +9,10 @@ def iterate_neko(filename='neko.txt.cabocha'):
 if __name__ == '__main__':
     from itertools import islice
 
-    for item in islice(iterate_neko(),10):
-        line = ''.join(map(lambda m : m.surface, item))
-        print(line)
-        for m in item:
-            print(m)
+    lines = list(islice(iterate_neko(),8))
+
+    print(lines[0])
+
+    line8 = lines[7]
+    print(''.join(list(map(lambda c: c.sentence(), line8))))
         

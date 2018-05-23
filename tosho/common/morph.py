@@ -24,8 +24,14 @@ class Chunk:
     '''
     文節を表すクラス
     '''
-    def __init__(self, id, morphs=[], dst=None, srcs=[]):
+    def __init__(self, id, morphs, dst, srcs):
         self.id = id
         self.morphs = morphs
         self.dst = dst
         self.srcs = srcs
+
+    def __repr__(self):
+        return f'* {self.id} {self.dst}D'
+
+    def sentence(self):
+        return ''.join(map(lambda m: m.surface, self.morphs))
