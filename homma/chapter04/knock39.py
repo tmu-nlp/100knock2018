@@ -13,7 +13,7 @@ frequency = defaultdict(int)
 for m in load_morphems_iter():
     frequency[m['surface']] += 1
 
-sorted_freq = list(sorted(frequency.values(), reverse=True))
+sorted_freq = sorted(frequency.values(), reverse=True)
 
 plt.loglog(sorted_freq)
 plt.show()
