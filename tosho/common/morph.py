@@ -1,4 +1,7 @@
 class Morph:
+    '''
+    形態素を表すクラス
+    '''
     def __init__(self):
         self.surface = None # 表層形
         self.base = None    # 基本形
@@ -16,3 +19,13 @@ class Morph:
     
     def __repr__(self):
         return f'{self.surface}\t{self.pos},{self.pos1},{self.base}'
+
+class Chunk:
+    '''
+    文節を表すクラス
+    '''
+    def __init__(self, id, morphs=[], dst=None, srcs=[]):
+        self.id = id
+        self.morphs = morphs
+        self.dst = dst
+        self.srcs = srcs

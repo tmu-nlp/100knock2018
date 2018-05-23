@@ -1,10 +1,10 @@
 import os,sys
 sys.path.append(os.pardir)
 
-from common.parsers import iterate_mecab_morphs, iterate_cabocha
+from common.parsers import iterate_cabocha
 
 def iterate_neko(filename='neko.txt.cabocha'):
-    return iterate_mecab_morphs(filename)
+    return iterate_cabocha(filename)
 
 if __name__ == '__main__':
     from itertools import islice
