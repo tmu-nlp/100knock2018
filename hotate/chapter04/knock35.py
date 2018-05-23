@@ -16,8 +16,7 @@ for sentence in load_mecab(path):
                 noun_phrase.append(''.join(noun))
             noun = []
     if len(noun) > 1:  # 文末が名詞のとき
-                noun_phrase.append(''.join(noun))
+        noun_phrase.append(''.join(noun))
     noun = []
-
 
 print(noun_phrase)
