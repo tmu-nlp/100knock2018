@@ -12,6 +12,8 @@ for m in load_morphems_iter():
     elif not count and m['pos'] == '名詞' or count:
         count += 1
         nouns += m['surface']
+if nouns:
+    concatenation_of_nouns.add(nouns)
 print(concatenation_of_nouns)
 
 
