@@ -8,11 +8,7 @@ if __name__ == '__main__':
     phrases = defaultdict(int)
 
     for morphs in iterate_neko():
-        for word_start in range(0, len(morphs) - 2):
-            m1 = morphs[word_start + 0]
-            m2 = morphs[word_start + 1]
-            m3 = morphs[word_start + 2]
-
+        for m1, m2, m3 in zip(*[morphs[i:] for i in range(3)]):
             if m1.pos == '名詞' and \
                 m2.surface == 'の' and \
                 m3.pos == '名詞':
