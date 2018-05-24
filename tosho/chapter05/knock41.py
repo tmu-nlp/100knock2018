@@ -6,13 +6,17 @@ from common.parsers import iterate_cabocha
 def iterate_neko(filename='neko.txt.cabocha'):
     return iterate_cabocha(filename)
 
+def get_neko_chunks(n):
+    return next(islice(iterate_neko(), n - 1, n))
+
 if __name__ == '__main__':
     from itertools import islice
 
-    lines = list(islice(iterate_neko(),8))
+    line8 = get_neko_chunks(8)
 
-    print(lines[0])
-
-    line8 = lines[7]
-    print(''.join(list(map(lambda c: c.sentence(), line8))))
-        
+    for chunk in line8:
+        o = chunk.sentence()
+        if chunk.dst is not None:
+            dst_chunk = line8[chunk.dst]
+            o += ' -> ' + dst_chunk.sentence()
+        print(o)
