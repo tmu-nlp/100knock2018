@@ -11,5 +11,5 @@ if __name__ == '__main__':
         if chunk.dst is not None:
             dst_chunk = line8[chunk.dst]
             if chunk.contains_pos('名詞') and dst_chunk.contains_pos('動詞'):
-                o = f'{chunk.sentence(True)}\t{dst_chunk.sentence(True)}'
+                o = f'{chunk.phrase(True)}\t{dst_chunk.phrase(True)}'
                 print(o)

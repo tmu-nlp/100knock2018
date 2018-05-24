@@ -9,8 +9,8 @@ def draw_dependency_graph(chunks, filename='graph.png'):
 
     for chunk in chunks:
         if chunk.dst is not None:
-            src = chunk.sentence(True)
-            dst = chunks[chunk.dst].sentence(True)
+            src = chunk.phrase(True)
+            dst = chunks[chunk.dst].phrase(True)
 
             edge = pydot.Edge(dst, src)
             graph.add_edge(edge)

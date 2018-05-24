@@ -14,8 +14,8 @@ if __name__ == '__main__':
     line8 = get_neko_chunks(8)
 
     for chunk in line8:
-        o = chunk.sentence()
+        o = chunk.phrase()
         if chunk.dst is not None:
             dst_chunk = line8[chunk.dst]
-            o += ' -> ' + dst_chunk.sentence()
+            o += ' -> ' + dst_chunk.phrase()
         print(o)

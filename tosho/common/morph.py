@@ -35,7 +35,7 @@ class Chunk:
     def __repr__(self):
         return f'* {self.id} {self.dst}D'
 
-    def sentence(self, remove_symbol=False):
+    def phrase(self, remove_symbol=False):
         if remove_symbol:
             morphs = filter(lambda m : m.pos != '記号', self.morphs)
         else:
