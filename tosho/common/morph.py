@@ -44,7 +44,10 @@ class Chunk:
         return ''.join(map(lambda m: m.surface, morphs))
     
     def contains_pos(self, pos):
+        return self.morph_of_pos(pos) is not None
+    
+    def morph_of_pos(self, pos):
         for m in self.morphs:
             if m.pos == pos:
-                return True
-        return False
+                return m
+        return None
