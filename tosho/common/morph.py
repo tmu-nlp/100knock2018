@@ -35,5 +35,10 @@ class Chunk:
     def __repr__(self):
         return f'* {self.id} {self.dst}D'
 
-    def sentence(self):
-        return ''.join(map(lambda m: m.surface, self.morphs))
+    def sentence(self, remove_symbol=False):
+        if remove_symbol:
+            morphs = filter(lambda m : m.pos != '記号', self.morphs)
+        else:
+            morphs = self.morphs
+
+        return ''.join(map(lambda m: m.surface, morphs))
