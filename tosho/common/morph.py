@@ -46,6 +46,9 @@ class Chunk:
     def contains_pos(self, pos, pos1=None, last=False):
         return self.morph_of_pos(pos, pos1, last) is not None
     
+    def morph(self, pos, pos1=None, last=False):
+        return self.morph_of_pos(pos, pos1, last)
+
     def morph_of_pos(self, pos, pos1=None, last=False):
         if last:
             morphs = reversed(self.morphs)
