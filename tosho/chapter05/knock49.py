@@ -7,7 +7,7 @@ def dependency_chain(chunks, start):
     return chain
 
 def chain_phrase(chunks, chain, decorator=None):
-    return ' -> '.join(map(lambda id: chunks[id].phrase(decorator=decorator), chain))
+    return ' -> '.join(map(lambda id: chunks[id].phrase(remove_symbol=True, decorator=decorator), chain))
 
 if __name__ == '__main__':
     import os,sys
