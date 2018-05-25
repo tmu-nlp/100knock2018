@@ -9,8 +9,6 @@ if __name__ == '__main__':
     words = defaultdict(int)
 
     for morphs in iterate_neko():
-        nouns = []
-
         for m in morphs:
             words[m.base] += 1
 

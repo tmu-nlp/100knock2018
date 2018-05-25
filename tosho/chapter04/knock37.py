@@ -9,8 +9,6 @@ if __name__ == '__main__':
     words = defaultdict(int)
 
     for morphs in iterate_neko():
-        nouns = []
-
         for m in morphs:
             words[m.base] += 1
 
@@ -30,4 +28,7 @@ if __name__ == '__main__':
 '''
 参考：matplotlibで日本語が文字化けする
 http://kaisk.hatenadiary.com/entry/2015/02/15/215831
+
+なお、macosではフォントはダウンロードする必要はなく、標準でインストールされたAppleGothicを利用すればよい。
+この場合、上記サイトのIPAexGothicの部分をAppleGothicに読み替えて実行すれば良い。
 '''
