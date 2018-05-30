@@ -9,7 +9,7 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
     from matplotlib.image import imread
 
-    chunks = get_neko_chunks(8)
+    chunks = get_neko_chunks(7)
 
     draw_dependency_graph(chunks, 'knock44.png')
 

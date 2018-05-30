@@ -4,7 +4,7 @@ if __name__ == '__main__':
 
     from chapter05.knock41 import get_neko_chunks
 
-    chunks = get_neko_chunks(8)
+    chunks = get_neko_chunks(7)
 
     for chunk in chunks:
         if chunk.morph('名詞') is not None:
