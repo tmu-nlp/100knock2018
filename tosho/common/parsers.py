@@ -12,26 +12,15 @@ pos1_index = 1
 def iterate_cabocha(filename):
     with open(filename, 'r') as f:
         chunks = []
-        morphs = None   # 現在解析中の文節の形態素リスト（chunk.morphsへのポインタ）
-        edges = []
         for line in f:
             line = line.strip('\n')
             if line.upper() == 'EOS':
-                # 文末に達した場合は、それまでの解析結果を返す
-                # todo: edges をまとめて、chunks をアップデートする
-                # print(edges)
-                for edge in edges:
-                    src = edge[0]
-                    dst = edge[1]
-
-                    if dst > -1:
-                        dst_chunk = chunks[dst]
-                        dst_chunk.srcs.append(src)
-                        # print(f'{dst_chunk} | {edge} | {dst_chunk.srcs}')
-
+                # 文末に達した場合は、文節間の関係(srcs)を設定し、解析結果を返す
+                for chunk in chunks:
+                    if chunk.dst is not None:
+                        chunks[chunk.dst].srcs.append(chunk.id)
                 yield chunks
                 chunks = []
-                edges = []
             elif line.startswith('*'):
                 tags = line.split(' ')
                 chunk_id = int(tags[1])
@@ -39,11 +28,9 @@ def iterate_cabocha(filename):
 
                 chunk = Chunk(chunk_id, dst=dst_id, srcs=[], morphs=[])
                 chunks.append(chunk)
-                morphs = chunk.morphs
-                edges.append((chunk_id, dst_id))
             else:
                 morph = parse_mecab_line(line)
-                morphs.append(morph)
+                chunks[-1].append(morph)
         # 最後の文の形態素リストを返す
         yield chunks
 

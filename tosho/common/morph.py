@@ -62,3 +62,7 @@ class Chunk:
             if m.pos == pos and (pos1==None or m.pos1 == pos1):
                 return m
         return None
+    
+    def append(self, morph):
+        self.morphs.append(morph)
+        return self
