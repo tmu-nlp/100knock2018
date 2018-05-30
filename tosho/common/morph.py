@@ -28,8 +28,6 @@ class Chunk:
         self.id = id
         self.morphs = morphs
         self.dst = dst
-        if dst < 0:
-            self.dst = None
         self.srcs = srcs
 
     def __repr__(self):

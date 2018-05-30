@@ -17,7 +17,7 @@ def iterate_cabocha(filename):
             if line.upper() == 'EOS':
                 # 文末に達した場合は、文節間の関係(srcs)を設定し、解析結果を返す
                 for chunk in chunks:
-                    if chunk.dst is not None:
+                    if chunk.dst > -1:
                         chunks[chunk.dst].srcs.append(chunk.id)
                 yield chunks
                 chunks = []
