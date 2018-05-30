@@ -24,9 +24,9 @@ def extraction_pos(list_srcs_dst, pos_1, pos_2):
 if __name__ == '__main__':
     text = 'neko.txt.cabocha'
     sentences = chunk_list(text)
-    list_ = srcs_dst_list(sentences)
+    srcs_dst = srcs_dst_list(sentences)
     with open('knock45.txt', 'w') as f:
-        list_pair = extraction_pos(list_, '動詞', '助詞')
+        list_pair = extraction_pos(srcs_dst, '動詞', '助詞')
         for pair in list_pair:
             f.write(f'{pair[0]}\t{pair[1]}\n')
 
