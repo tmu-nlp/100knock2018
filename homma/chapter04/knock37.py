@@ -1,5 +1,4 @@
 import matplotlib
-import numpy as np
 from collections import defaultdict
 from knock30 import load_morphems_iter
 from matplotlib import pyplot as plt
@@ -20,9 +19,9 @@ for m in load_morphems_iter():
 
 sorted_freq = list(sorted(frequency.items(), key=lambda x: -x[1]))
 
-left = np.array(range(10))
-height = np.array([s[1] for s in sorted_freq[:10]])
-label = [s[0] for s in sorted_freq[:10]]
+left   = [i for i in range(10)]
+height = [s[1] for s in sorted_freq[:10]]
+label  = [s[0] for s in sorted_freq[:10]]
 plt.bar(left, height, tick_label=label, align='center')
 plt.show()
 

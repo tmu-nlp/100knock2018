@@ -2,30 +2,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib
 import math
-
-sentence=[]
-kari={}
-words=[]
+from util import *
 
 
-lines = open("neko_m.txt").readlines()
-for line in lines:
-  kari={}
-  if "EOS" in line:
-    break
-  line= line.split("\t")
-  line2=line[1].split(",")
-  line.pop()
-  line.extend(line2)
-  if "。" in line[0]:
-    sentence.append(words)
-    words=[]
-  kari["surface"]=line[0]
-  kari["pos"]=line[1]
-  kari["pos1"]=line[2]
-  kari["base"]=line[7]
-  words.append(kari)
-
+words,sentence = yomikomi()
 hindo={}
 value=[]
 key=[]

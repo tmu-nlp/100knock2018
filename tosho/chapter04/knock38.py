@@ -9,13 +9,11 @@ if __name__ == '__main__':
     words = defaultdict(int)
 
     for morphs in iterate_neko():
-        nouns = []
-
         for m in morphs:
             words[m.base] += 1
 
     occurences = words.values()
 
-    plt.hist(occurences, bins=100, log=True)
+    plt.hist(occurences, log=True)
     plt.title(f'出現頻度ごとの単語誤り数(最大頻度:{max(occurences)})')
     plt.show()

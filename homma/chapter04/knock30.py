@@ -32,7 +32,7 @@ def load_morphems_iter(file='neko.txt.mecab'):
         if line == 'EOS\n':
             continue
         # 要素ごとに分割
-        splited = re.split('[\t,]', line.strip())
+        splited = re.split('[\t,]', line.rstrip())
         # 各形態素を格納
         morpheme = {
             'surface': splited[0],
@@ -55,7 +55,7 @@ if __name__ == '__main__':
 1文を形態素（マッピング型）のリストとして表現せよ．第4章の残りの問題では，ここで作ったプログラムを活用せよ．
 
 {'surface': '一', 'base': '一', 'pos': '名詞', 'pos1': '数'}
-{'surface': '記号', 'base': '\u3000', 'pos': '空白', 'pos1': '*'}
+{'surface': '\u3000', 'base': '\u3000', 'pos': '記号', 'pos1': '空白'}
 {'surface': '吾輩', 'base': '吾輩', 'pos': '名詞', 'pos1': '代名詞'}
 {'surface': 'は', 'base': 'は', 'pos': '助詞', 'pos1': '係助詞'}
 {'surface': '猫', 'base': '猫', 'pos': '名詞', 'pos1': '一般'}
