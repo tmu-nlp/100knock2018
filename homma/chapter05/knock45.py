@@ -52,7 +52,7 @@ if __name__ == '__main__':
 '''
 
 ''' 実行結果
-sort out.txt | uniq --count | sort --numeric-sort --reverse | head -n10
+sort out.txt | uniq --count | sort --numeric-sort --reverse | head
     565 云う    と
     438 する    を
     251 思う    と
@@ -64,7 +64,7 @@ sort out.txt | uniq --count | sort --numeric-sort --reverse | head -n10
     117 する    が
     105 する    に を
 
-grep "^する\s" out.txt | sort | uniq --count | sort --numeric-sort --reverse | head -n10
+grep "^する\s" out.txt | sort | uniq --count | sort --numeric-sort --reverse | head
     438 する    を
     175 する    に
     126 する    と
@@ -76,7 +76,7 @@ grep "^する\s" out.txt | sort | uniq --count | sort --numeric-sort --reverse |
      58 する    が を
      48 する    から
 
-grep "^見る\s" out.txt | sort | uniq --count | sort --numeric-sort --reverse | head -n10
+grep "^見る\s" out.txt | sort | uniq --count | sort --numeric-sort --reverse | head
     174 見る    て
      94 見る    を
      21 見る    て て
@@ -88,7 +88,7 @@ grep "^見る\s" out.txt | sort | uniq --count | sort --numeric-sort --reverse |
      11 見る    から て
       8 見る    に
 
-grep "^与える\s" out.txt | sort | uniq --count | sort --numeric-sort --reverse | head -n10
+grep "^与える\s" out.txt | sort | uniq --count | sort --numeric-sort --reverse | head
       3 与える  に を
       2 与える  て に は を
       1 与える  ば を
