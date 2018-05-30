@@ -9,7 +9,7 @@ if __name__ == '__main__':
 
     kaku = defaultdict(set)
     for chunk in chunks:
-        if chunk.dst is not None:
+        if chunk.dst > -1:
             dst_chunk = chunks[chunk.dst]
             if chunk.contains_pos('助詞') and dst_chunk.contains_pos('動詞'):
                 verb = dst_chunk.morph_of_pos('動詞').base

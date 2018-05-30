@@ -1,7 +1,7 @@
 def dependency_chain(chunks, start):
     chain = []
     dst = start
-    while dst is not None:
+    while dst > -1:
         chain.append(dst)
         dst = chunks[dst].dst
     return chain

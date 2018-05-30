@@ -8,7 +8,7 @@ def draw_dependency_graph(chunks, filename='graph.png'):
     graph = pydot.Dot(graph_type='graph')
 
     for chunk in chunks:
-        if chunk.dst is not None:
+        if chunk.dst > -1:
             src = chunk.phrase(True)
             dst = chunks[chunk.dst].phrase(True)
 

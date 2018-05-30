@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
     for chunk in line8:
         o = chunk.phrase()
-        if chunk.dst is not None:
+        if chunk.dst > -1:
             dst_chunk = line8[chunk.dst]
             o += ' -> ' + dst_chunk.phrase()
         print(o)
