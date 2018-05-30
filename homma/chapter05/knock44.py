@@ -13,6 +13,7 @@ def gen_graph(edges):
 
         graph.add_node(pydot.Node(id1, label=label1))
         graph.add_node(pydot.Node(id2, label=label2))
+        # ノードを作らずにエッジだけでも動く（下で言うidがそのまま名前になる。名前の被りには注意）
 
         graph.add_edge(pydot.Edge(id1, id2))
     return graph

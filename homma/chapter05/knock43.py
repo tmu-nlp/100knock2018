@@ -7,9 +7,9 @@ def main():
         for chunk in chunks:
             if chunk.dst == -1:
                 continue
-            if not '名詞' in (morph.pos for morph in chunk.morphs):
+            if all(morph.pos != '名詞' for morph in chunk.morphs):
                 continue
-            if not '動詞' in (morph.pos for morph in chunks[chunk.dst].morphs):
+            if all(morph.pos != '動詞' for morph in chunks[chunk.dst].morphs):
                 continue
             src = chunk.normalized_surface()
             dst = chunks[chunk.dst].normalized_surface()
