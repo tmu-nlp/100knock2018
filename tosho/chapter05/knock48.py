@@ -11,7 +11,7 @@ if __name__ == '__main__':
             o = chunk.phrase(True)
 
             dst = chunk.dst
-            while dst is not None:
+            while dst > -1:
                 dst_chunk = chunks[dst]
                 o += ' -> ' + dst_chunk.phrase(True)
                 dst = dst_chunk.dst

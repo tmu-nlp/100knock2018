@@ -9,7 +9,7 @@ if __name__ == '__main__':
 
     for chunk in line8:
         o = chunk.phrase(True)
-        if chunk.dst is not None:
+        if chunk.dst > -1:
             dst_chunk = line8[chunk.dst]
             o += '\t' + dst_chunk.phrase(True)
             print(o)
