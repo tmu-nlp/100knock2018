@@ -30,10 +30,17 @@ if __name__ == '__main__':
             chain_i = dependency_chain(chunks, i)
             chain_j = dependency_chain(chunks, j)
 
-            # Morph.surfaceの戻り値を変えるためのデコレーター
-            decorator = lambda m: 'X' if m == noun_i else ('Y' if m == noun_j else m.surface)
 
             if set(chain_i) & set(chain_j) == set(chain_j):
+                # Morph.surfaceの戻り値を変えるためのデコレーター
+                # chunk_j は、Y に該当するものだけ出力する
+                # 名詞句から名詞句のチェーンなので、Yを含む文節のうち、名詞句までを出力するため
+                decorator = lambda m: \
+                    'X' if m == noun_i else (\
+                    'Y' if m == noun_j else (\
+                    '' if m in chunk_j.morphs else\
+                    m.surface))
+                
                 # 文節jは文節iから構文木の根に至るまでの経路上にある
                 chain = chain_i[:- len(chain_j) + 1]
                 print(chain_phrase(chunks, chain, decorator))
@@ -42,6 +49,9 @@ if __name__ == '__main__':
                 shared_chain = list(set(chain_i) & set(chain_j))
                 chain_i_ind = chain_i[:-len(shared_chain)]
                 chain_j_ind = chain_j[:-len(shared_chain)]
+
+                # Morph.surfaceの戻り値を変えるためのデコレーター
+                decorator = lambda m: 'X' if m == noun_i else ('Y' if m == noun_j else m.surface)
 
                 parts = [chain_i_ind, chain_j_ind, shared_chain]
                 phrase_parts = map(lambda chain: chain_phrase(chunks,chain,decorator), parts)
