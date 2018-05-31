@@ -11,10 +11,10 @@ def srcs_dst_dict(text):
         for i in range(len(sentence)):
             srcs = sentence[i]
             if srcs.dst == -1:
-                pass
+                dst = None
             else:
                 dst = sentence[sentence[i].dst]
-                dic[srcs] = dst
+            dic[srcs] = dst
         list_.append(dic)
     return list_
 
@@ -23,23 +23,24 @@ def extraction_noun(dict_srcs_dst):
     sentences = []
     for dic in dict_srcs_dst:
         sentence = []
-        for srcs, dst in dic.items():
+        for src, dst in dic.items():
             combi = []
-            phrase_srcs = srcs.check_pos_phrase('名詞')
+            phrase_srcs = src.check_pos_phrase('名詞')
             if phrase_srcs is not None:
-                combi.append(srcs)
+                combi.append(src)
                 combi.append(dst)
                 combi = make_combi(combi, dic)
                 sentence.append(combi)
             else:
                 pass
+
         sentences.append(sentence)
     return sentences
 
 
 # combiの続きを作る
 def make_combi(combi, dic):
-    if combi[-1].dst is not -1:
+    if combi[-1] is not None:
         combi.append(dic[combi[-1]])
         return make_combi(combi, dic)
     else:

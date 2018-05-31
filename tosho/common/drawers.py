@@ -10,9 +10,10 @@ def draw_dependency_graph(chunks, filename='graph.png'):
     for chunk in chunks:
         if chunk.dst > -1:
             src = chunk.phrase(True)
+            dst_id = chunks[chunk.dst].id
             dst = chunks[chunk.dst].phrase(True)
 
-            edge = pydot.Edge(dst, src)
+            edge = pydot.Edge(f'{dst_id}:{dst}', f"{chunk.id}:{src}")
             graph.add_edge(edge)
-    
+            
     graph.write_png(filename)
