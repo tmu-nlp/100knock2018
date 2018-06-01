@@ -3,6 +3,16 @@ sys.path.append(os.pardir)
 
 from common.morph import Morph, Chunk
 from collections import defaultdict
+import regex as re
+
+def load_en_txt(file_name):
+    p = re.compile(r'.+?[\.|;|:|?|!](?=(?:\s[A-Z])|$)')
+    with open(file_name, 'r') as doc:
+        for paragraph in doc:
+            matches = re.findall(p, paragraph)
+            for m in matches:
+                yield m
+                
 
 # 名詞,一般,*,*,*,*,南無阿弥陀仏,ナムアミダブツ,ナムアミダブツ
 base_index = 6
@@ -33,7 +43,6 @@ def iterate_cabocha(filename):
                 chunks[-1].append(morph)
         # 最後の文の形態素リストを返す
         yield chunks
-
 
 def filter_mecab_result(filename, predicator):
     '''
