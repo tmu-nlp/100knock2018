@@ -13,4 +13,4 @@ if __name__ == '__main__':
     import itertools
 
     for w in itertools.islice(load_nlp_xml(), 50):
-        print(w.surface)
+        print('\t'.join([w.surface, w.base, w.pos]))
