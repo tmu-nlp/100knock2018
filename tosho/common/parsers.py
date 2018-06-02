@@ -4,6 +4,7 @@ sys.path.append(os.pardir)
 from common.morph import Morph, Chunk
 from collections import defaultdict
 import regex as re
+import xml.etree.ElementTree as etree
 
 def load_en_txt(file_name):
     p = re.compile(r'.+?[\.|;|:|?|!](?=(?:\s[A-Z])|$)')
@@ -12,7 +13,17 @@ def load_en_txt(file_name):
             matches = re.findall(p, paragraph)
             for m in matches:
                 yield m
-                
+
+def load_corenlp_xml(file_name):
+    tree = etree.parse(file_name)
+    for sentence in tree.getiterator('sentence'):
+        for word in sentence.getiterator('token'):
+            m = Morph()
+            m.surface = word.find('word').text
+            m.base = word.find('lemma').text
+            m.pos = word.find('POS').text
+            yield m
+
 
 # 名詞,一般,*,*,*,*,南無阿弥陀仏,ナムアミダブツ,ナムアミダブツ
 base_index = 6
