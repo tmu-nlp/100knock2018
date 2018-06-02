@@ -1,7 +1,7 @@
 import os,sys
 sys.path.append(os.pardir)
 
-from common.morph import Morph, Chunk, EnToken
+from common.morph import Morph, Chunk, EnToken, Mention, Coreference
 from collections import defaultdict
 import regex as re
 import xml.etree.ElementTree as etree
@@ -16,7 +16,7 @@ def load_en_txt(file_name):
 
 def load_corenlp_sentence(file_name):
     root = etree.parse(file_name)
-    for sentence in root.find('./document/sentences').getiterator('sentence'):
+    for sentence in root.findall('./document/sentences/sentence'):
         sentence_id = sentence.attrib['id']
         for word in sentence.getiterator('token'):
             yield EnToken(
@@ -27,6 +27,25 @@ def load_corenlp_sentence(file_name):
                 word.find('POS').text,
                 word.find('NER').text
             )
+
+def load_corenlp_coreference(file_name):
+    root = etree.parse(file_name)
+    for coref in root.findall('./document/coreference/coreference'):
+        repr = None
+        mentions = []
+        for m in coref.getiterator('mention'):
+            mention = Mention(
+                int(m.find('sentence').text),
+                int(m.find('start').text),
+                int(m.find('end').text),
+                int(m.find('head').text),
+                m.find('text').text
+            )
+            if 'representative' in m.attrib.keys() and m.attrib['representative'] == 'true':
+                repr = mention
+            mentions.append(mention)
+        print(f'{repr.sentence_id}({repr.start}..{repr.end}) -> {len(mentions)-1}')
+        yield Coreference(repr, mentions)
 
 
 # 名詞,一般,*,*,*,*,南無阿弥陀仏,ナムアミダブツ,ナムアミダブツ

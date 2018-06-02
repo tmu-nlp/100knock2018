@@ -10,6 +10,19 @@ class EnToken:
     def __repr__(self):
         return '\t'.join([self.word, self.lemma, self.pos, self.ner])
 
+class Mention:
+    def __init__(self, sentence_id, start, end, head, text):
+        self.sentence_id = sentence_id
+        self.start = start
+        self.end = end
+        self.head = head
+        self.text = text
+
+class Coreference:
+    def __init__(self, representative, mentions):
+        self.representative = representative
+        self.mentions = mentions
+
 class Morph:
     '''
     形態素を表すクラス
