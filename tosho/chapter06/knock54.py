@@ -2,15 +2,10 @@
 
 import sys, os
 sys.path.append(os.pardir)
-from common.parsers import load_corenlp_xml
-import xml
-
-def load_nlp_xml(file_name='./nlp.txt.xml'):
-    for elm in load_corenlp_xml(file_name):
-        yield elm
+from chapter06.knock53 import load_nlp_xml
 
 if __name__ == '__main__':
     import itertools
 
     for w in itertools.islice(load_nlp_xml(), 50):
-        print('\t'.join([w.surface, w.base, w.pos]))
+        print('\t'.join([w.word, w.lemma, w.pos]))

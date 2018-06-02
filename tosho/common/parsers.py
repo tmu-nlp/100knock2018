@@ -1,7 +1,7 @@
 import os,sys
 sys.path.append(os.pardir)
 
-from common.morph import Morph, Chunk
+from common.morph import Morph, Chunk, EnWord
 from collections import defaultdict
 import regex as re
 import xml.etree.ElementTree as etree
@@ -18,11 +18,12 @@ def load_corenlp_xml(file_name):
     tree = etree.parse(file_name)
     for sentence in tree.getiterator('sentence'):
         for word in sentence.getiterator('token'):
-            m = Morph()
-            m.surface = word.find('word').text
-            m.base = word.find('lemma').text
-            m.pos = word.find('POS').text
-            yield m
+            yield EnWord(
+                word.find('word').text,
+                word.find('lemma').text,
+                word.find('POS').text,
+                word.find('NER').text
+            )
 
 
 # 名詞,一般,*,*,*,*,南無阿弥陀仏,ナムアミダブツ,ナムアミダブツ

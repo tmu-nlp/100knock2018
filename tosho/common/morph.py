@@ -1,3 +1,13 @@
+class EnWord:
+    def __init__(self, word=None, lemma=None, pos=None, ner=None):
+        self.word = word
+        self.lemma = lemma
+        self.pos = pos
+        self.ner = ner
+    
+    def __repr__(self):
+        return '\t'.join([self.word, self.lemma, self.pos, self.ner])
+
 class Morph:
     '''
     形態素を表すクラス
