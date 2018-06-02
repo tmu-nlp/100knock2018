@@ -1,5 +1,7 @@
-class EnWord:
-    def __init__(self, word=None, lemma=None, pos=None, ner=None):
+class EnToken:
+    def __init__(self, sentence_id=None, id=None, word=None, lemma=None, pos=None, ner=None):
+        self.sentence_id = sentence_id
+        self.id = id
         self.word = word
         self.lemma = lemma
         self.pos = pos

@@ -1,7 +1,7 @@
 import os,sys
 sys.path.append(os.pardir)
 
-from common.morph import Morph, Chunk, EnWord
+from common.morph import Morph, Chunk, EnToken
 from collections import defaultdict
 import regex as re
 import xml.etree.ElementTree as etree
@@ -14,11 +14,14 @@ def load_en_txt(file_name):
             for m in matches:
                 yield m
 
-def load_corenlp_xml(file_name):
-    tree = etree.parse(file_name)
-    for sentence in tree.getiterator('sentence'):
+def load_corenlp_sentence(file_name):
+    root = etree.parse(file_name)
+    for sentence in root.find('./document/sentences').getiterator('sentence'):
+        sentence_id = sentence.attrib['id']
         for word in sentence.getiterator('token'):
-            yield EnWord(
+            yield EnToken(
+                int(sentence_id),
+                int(word.attrib['id']),
                 word.find('word').text,
                 word.find('lemma').text,
                 word.find('POS').text,
