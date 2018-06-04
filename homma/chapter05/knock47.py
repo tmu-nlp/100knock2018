@@ -15,7 +15,7 @@ def main():
                     continue
 
                 # 助詞を含む係り元の文節
-                particle_phrases = [chunks[src] for src in chunk.srcs[i] if sum(1 for m in chunks[src].morphs if m.pos == '助詞')]
+                particle_phrases = [chunks[src] for src in chunk.srcs[i] if any(m.pos == '助詞' for m in chunks[src].morphs)]
                 if not particle_phrases:
                     continue
 
@@ -73,7 +73,7 @@ if __name__ == '__main__':
 '''
 
 ''' 実行結果
-cut out3.txt -f1 | sort | uniq --count | sort --numeric-sort --reverse | head -n10
+cut out3.txt -f1 | sort | uniq --count | sort --numeric-sort --reverse | head
 
      30 返事をする
      21 挨拶をする
@@ -86,7 +86,7 @@ cut out3.txt -f1 | sort | uniq --count | sort --numeric-sort --reverse | head -n
       6 注意をする
       6 昼寝をする
 
-cut out3.txt -f1,2 | grep -E "^.*\s.+" | sort | uniq --count | sort --numeric-sort --reverse | head -n10
+cut out3.txt -f1,2 | grep -E "^.*\s.+" | sort | uniq --count | sort --numeric-sort --reverse | head
 
       4 返事をする      と
       4 挨拶をする      から

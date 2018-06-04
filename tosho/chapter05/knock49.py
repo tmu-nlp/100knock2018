@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
     from chapter05.knock41 import get_neko_chunks
 
-    chunks = get_neko_chunks(8)
+    chunks = get_neko_chunks(7)
 
     for i, chunk_i in enumerate(chunks):
         noun_i = chunk_i.morph('名詞')
@@ -27,15 +27,22 @@ if __name__ == '__main__':
             if noun_j is None:
                 continue
 
-            chain_i = dependency_chain(chunks, i)
-            chain_j = dependency_chain(chunks, j)
+            chain_i = dependency_chain(chunks, chunk_i.id)
+            chain_j = dependency_chain(chunks, chunk_j.id)
 
-            # Morph.surfaceの戻り値を変えるためのデコレーター
-            decorator = lambda m: 'X' if m == noun_i else ('Y' if m == noun_j else m.surface)
 
             if set(chain_i) & set(chain_j) == set(chain_j):
+                # Morph.surfaceの戻り値を変えるためのデコレーター
+                # chunk_j は、Y に該当するものだけ出力する
+                # 名詞句から名詞句のチェーンなので、Yを含む文節のうち、名詞句までを出力するため
+                decorator = lambda m: \
+                    'X' if m == noun_i else (\
+                    'Y' if m == noun_j else (\
+                    '' if m in chunk_j.morphs else\
+                    m.surface))
+                
                 # 文節jは文節iから構文木の根に至るまでの経路上にある
-                chain = chain_i[:- len(chain_j) + 1]
+                chain = chain_i[:len(chain_i) - len(chain_j) + 1]
                 print(chain_phrase(chunks, chain, decorator))
             else:
                 # 文節iと文節jは構文木の根に至る経路上で共通の文節kで交わる
@@ -43,7 +50,10 @@ if __name__ == '__main__':
                 chain_i_ind = chain_i[:-len(shared_chain)]
                 chain_j_ind = chain_j[:-len(shared_chain)]
 
-                parts = [chain_i_ind, chain_j_ind, shared_chain]
+                # Morph.surfaceの戻り値を変えるためのデコレーター
+                decorator = lambda m: 'X' if m == noun_i else ('Y' if m == noun_j else m.surface)
+
+                parts = [chain_i_ind, chain_j_ind, shared_chain[:1]]
                 phrase_parts = map(lambda chain: chain_phrase(chunks,chain,decorator), parts)
 
                 print(' | '.join(phrase_parts))

@@ -53,21 +53,17 @@ def obtain_path_str(chunks, paths, i, j):
 
 def main():
     for i, chunks in enumerate(load_cabocha_iter()):
-        if i != 5:
+        if i != 4:
             continue
         paths = {} # ex) {0: [5], 1: [2, 3, 4, 5], 3: [4, 5], 4: [5]}
         for j, chunk in enumerate(chunks):
-            if chunk.dst == -1:
-                continue
-            noun = [morph.surface for morph in chunk.morphs if morph.pos == '名詞']
-            if not noun:
+            if all(m.pos != '名詞' for m in chunk.morphs):
                 continue
             current = chunk
             paths[j] = []
             while current.dst != -1:
                 paths[j].append(current.dst)
                 current = chunks[current.dst]
-        print(paths)
         for k, l in combinations(paths.keys(), 2):
             print(obtain_path_str(chunks, paths, k, l))
 

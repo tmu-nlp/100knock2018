@@ -9,6 +9,8 @@ data.small <- data.small[order(data.small$freq, decreasing = T),]
 data.small$rank <- c(1:nrow(data.small))
 data.text <- subset(data.small, rank %in% c(1:20, 50, 100:110, 400:410, 600, 1000:1010, 1200:1210, 1800:1810, 5000:5010, 8000, -1))
 
+# color
+# https://www.stat.ubc.ca/~jenny/STAT545A/block17_colorsGgplot2Qualitative.html
 # http://www.sthda.com/english/wiki/print.php?id=188
 # coord:
 # http://www.sthda.com/english/wiki/ggplot2-axis-scales-and-transformations
