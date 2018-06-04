@@ -41,8 +41,3 @@ if __name__ == '__main__':
     
     for i, token in sentences.items():
         print(tokens_to_str(token))
-
-'''
-The subfield of NLP devoted to learning approaches is known as Natural Language Learning -LRB- NLL -RRB- and NLL (NLL (its)) conference CoNLL and peak body SIGNLL are sponsored by ACL , recognizing also their links with Computational Linguistics and Language Acquisition .
-The subfield of NLP devoted to learning approaches is known as Natural Language Learning (NLL) and its conference CoNLL and peak body SIGNLL are sponsored by ACL, recognizing also their links with Computational Linguistics and Language Acquisition. When the aims of computational language learning research is to understand more about human language acquisition, or psycholinguistics, NLL overlaps into the related field of Computational Psycholinguistics.
-'''
