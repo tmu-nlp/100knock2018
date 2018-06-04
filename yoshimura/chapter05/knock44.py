@@ -61,8 +61,8 @@ if __name__ == '__main__':
     for line in get_chunk_list():
         for chunk in line:
             if chunk.dst != -1:
-                src = chunk.normalized_surface()
-                dst = line[chunk.dst].normalized_surface()
+                src = chunk.surface()
+                dst = line[chunk.dst].surface()
                 if src != '' and dst != '':
                     edges.append(((src, dst)))
     
@@ -71,6 +71,7 @@ if __name__ == '__main__':
     graph.write_png('result.png')
 
 
+    # filter
 
 
 

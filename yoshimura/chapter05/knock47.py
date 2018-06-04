@@ -28,8 +28,8 @@ for line in get_chunk_list():
                     if phrase != sahen_wo:
                         phrases.append(line[src].normalized_surface())
 
-                avs = ' '.join(sorted(avs))
-                phrases = ' '.join(sorted(phrases))
+                avs = ' '.join(avs)
+                phrases = ' '.join(phrases)
                 print(f'{predicate}\t{avs}\t{phrases}')
 
 # 動詞のヲ格にサ変接続名詞が入っている場合のみに着目したい．46のプログラムを以下の仕様を満たすように改変せよ．

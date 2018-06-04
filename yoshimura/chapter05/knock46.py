@@ -5,22 +5,16 @@ for line in get_chunk_list():
         if chunk.check_pos('動詞'):
             # 述語を取得
             predicate = chunk.get_surfaces('pos', '動詞')[0]
-            
-            # 助動詞を取得
+
+            # 助動詞と動詞の格フレームをを取得
             avs = []
-            for src in chunk.srcs:
-                if len(line[src].get_surfaces('pos', '助詞')) > 0:
-                    avs.append(line[src].get_surfaces('pos', '助詞').pop())
-            
-            # 動詞の格フレームを取得
             phrases = []
             for src in chunk.srcs:
                 phrases.append(line[src].normalized_surface())
-
+                if len(line[src].get_surfaces('pos', '助詞')) > 0:
+                    avs.append(line[src].get_surfaces('pos', '助詞').pop())
             
             if avs:
-                avs = ' '.join(sorted(avs))
-                phrases = ' '.join(sorted(phrases))
+                avs = ' '.join(avs)
+                phrases = ' '.join(phrases)
                 print(f'{predicate}\t{avs}\t{phrases}')
-
-# phraseが辞書順にならない
