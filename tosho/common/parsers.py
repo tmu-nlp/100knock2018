@@ -62,6 +62,7 @@ def load_corenlp_dependencies(file_name, dtype='collapsed'):
                 dep_node = dep.find('dependent')
                 
                 d = Dependency(
+                    dep.attrib['type'],
                     f'{gov_node.text}[{gov_node.attrib["idx"]}]', 
                     f'{dep_node.text}[{dep_node.attrib["idx"]}]'
                 )

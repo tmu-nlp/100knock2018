@@ -24,12 +24,13 @@ class Coreference:
         self.mentions = mentions
 
 class Dependency:
-    def __init__(self, governor, dependent):
+    def __init__(self, dtype, governor, dependent):
+        self.dtype = dtype
         self.governor = governor
         self.dependent = dependent
     
     def __repr__(self):
-        return f'{self.dependent} -> {self.governor}'
+        return f'{self.dependent} -{self.dtype}-> {self.governor}'
 
 class Morph:
     '''
