@@ -69,6 +69,14 @@ def load_corenlp_dependencies(file_name, dtype='collapsed'):
                 ret.append(d)
             yield sentence_id, ret
 
+def load_corenlp_sentiment(file_name):
+    root = etree.parse(file_name)
+    for sentence in root.findall('./document/sentences/sentence'):
+        s_id = sentence.attrib['id']
+        parse = sentence.find('parse').text
+        
+        yield s_id, parse
+
 # 名詞,一般,*,*,*,*,南無阿弥陀仏,ナムアミダブツ,ナムアミダブツ
 base_index = 6
 pos_index = 0
