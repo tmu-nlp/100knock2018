@@ -1,8 +1,81 @@
 import os,sys
 sys.path.append(os.pardir)
 
-from common.morph import Morph, Chunk
+from common.morph import Morph, Chunk, EnToken, Mention, Coreference, Dependency
 from collections import defaultdict
+import regex as re
+import xml.etree.ElementTree as etree
+
+def load_en_txt(file_name):
+    p = re.compile(r'.+?[\.|;|:|?|!](?=(?:\s[A-Z])|$)')
+    with open(file_name, 'r') as doc:
+        for paragraph in doc:
+            matches = re.findall(p, paragraph)
+            for m in matches:
+                yield m
+
+def load_corenlp_sentence(file_name):
+    root = etree.parse(file_name)
+    for sentence in root.findall('./document/sentences/sentence'):
+        sentence_id = sentence.attrib['id']
+        for word in sentence.getiterator('token'):
+            yield EnToken(
+                int(sentence_id),
+                int(word.attrib['id']),
+                word.find('word').text,
+                word.find('lemma').text,
+                word.find('POS').text,
+                word.find('NER').text
+            )
+
+def load_corenlp_coreference(file_name):
+    root = etree.parse(file_name)
+    for coref in root.findall('./document/coreference/coreference'):
+        repr = None
+        mentions = []
+        for m in coref.getiterator('mention'):
+            mention = Mention(
+                int(m.find('sentence').text),
+                int(m.find('start').text),
+                int(m.find('end').text),
+                int(m.find('head').text),
+                m.find('text').text
+            )
+            if 'representative' in m.attrib.keys() and m.attrib['representative'] == 'true':
+                repr = mention
+            mentions.append(mention)
+        print(f'{repr.sentence_id}({repr.start}..{repr.end}) -> {len(mentions)-1}')
+        yield Coreference(repr, mentions)
+
+def load_corenlp_dependencies(file_name, dtype='collapsed'):
+    dtype = dtype + '-dependencies'
+    root = etree.parse(file_name)
+    for sentence in root.findall('./document/sentences/sentence'):
+        sentence_id = sentence.attrib['id']
+        deps = sentence.find(f'dependencies[@type="{dtype}"]')
+        if deps is None:
+            yield sentence_id, []
+        else:
+            ret = []
+            for dep in deps.findall('dep'):
+                gov_node = dep.find('governor')
+                dep_node = dep.find('dependent')
+                
+                d = Dependency(
+                    dep.attrib['type'],
+                    f'{gov_node.text}[{gov_node.attrib["idx"]}]', 
+                    f'{dep_node.text}[{dep_node.attrib["idx"]}]'
+                )
+                ret.append(d)
+            yield sentence_id, ret
+
+def load_corenlp_sentiment(file_name):
+    root = etree.parse(file_name)
+    for sentence in root.findall('./document/sentences/sentence'):
+        s_id = sentence.attrib['id']
+        parse = sentence.find('parse').text
+        
+        yield s_id, parse
 
 # 名詞,一般,*,*,*,*,南無阿弥陀仏,ナムアミダブツ,ナムアミダブツ
 base_index = 6
@@ -33,7 +106,6 @@ def iterate_cabocha(filename):
                 chunks[-1].append(morph)
         # 最後の文の形態素リストを返す
         yield chunks
-
 
 def filter_mecab_result(filename, predicator):
     '''

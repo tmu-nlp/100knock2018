@@ -4,6 +4,16 @@ sys.path.append(os.pardir)
 from common.morph import Morph, Chunk
 import pydot
 
+def draw_corenlp_dependencies(deps, file_name='graph.png'):
+    graph = pydot.Dot(graph_type='graph')
+
+    for d in deps:
+        edge = pydot.Edge(d.governor, d.dependent, label=f'"{d.dtype}"')
+        graph.add_edge(edge)
+    
+    graph.write(file_name + '.dot')
+    graph.write_png(file_name)
+
 def draw_dependency_graph(chunks, filename='graph.png'):
     graph = pydot.Dot(graph_type='graph')
 
