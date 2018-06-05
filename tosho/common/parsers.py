@@ -1,7 +1,7 @@
 import os,sys
 sys.path.append(os.pardir)
 
-from common.morph import Morph, Chunk, EnToken, Mention, Coreference
+from common.morph import Morph, Chunk, EnToken, Mention, Coreference, Dependency
 from collections import defaultdict
 import regex as re
 import xml.etree.ElementTree as etree
@@ -47,6 +47,26 @@ def load_corenlp_coreference(file_name):
         print(f'{repr.sentence_id}({repr.start}..{repr.end}) -> {len(mentions)-1}')
         yield Coreference(repr, mentions)
 
+def load_corenlp_dependencies(file_name, dtype='collapsed'):
+    dtype = dtype + '-dependencies'
+    root = etree.parse(file_name)
+    for sentence in root.findall('./document/sentences/sentence'):
+        sentence_id = sentence.attrib['id']
+        deps = sentence.find(f'dependencies[@type="{dtype}"]')
+        if deps is None:
+            yield sentence_id, []
+        else:
+            ret = []
+            for dep in deps.findall('dep'):
+                gov_node = dep.find('governor')
+                dep_node = dep.find('dependent')
+                
+                d = Dependency(
+                    f'{gov_node.text}[{gov_node.attrib["idx"]}]', 
+                    f'{dep_node.text}[{dep_node.attrib["idx"]}]'
+                )
+                ret.append(d)
+            yield sentence_id, ret
 
 # 名詞,一般,*,*,*,*,南無阿弥陀仏,ナムアミダブツ,ナムアミダブツ
 base_index = 6

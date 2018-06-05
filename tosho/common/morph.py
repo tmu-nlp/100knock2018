@@ -23,6 +23,14 @@ class Coreference:
         self.representative = representative
         self.mentions = mentions
 
+class Dependency:
+    def __init__(self, governor, dependent):
+        self.governor = governor
+        self.dependent = dependent
+    
+    def __repr__(self):
+        return f'{self.dependent} -> {self.governor}'
+
 class Morph:
     '''
     形態素を表すクラス
