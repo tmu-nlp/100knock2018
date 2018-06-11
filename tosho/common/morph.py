@@ -1,3 +1,77 @@
+from itertools import chain
+
+class SNode:
+    def __init__(self, tree):
+        self.pos = tree[0]
+
+        if len(tree) == 2 and isinstance(tree[1], str):
+            self.children = tree[1]
+            self.is_leaf = True
+        else:
+            self.children = [SNode(stree) for stree in tree[1:]]
+            self.is_leaf = False
+        
+        # print(f'{self.is_leaf:<10}{self.pos:<10}{str(self.children)[:70]}')
+        
+    def __repr__(self):
+        if self.is_leaf:
+            return f'({self.pos} {self.children})'
+        else:
+            return f'({self.pos} {" ".join(map(str, self.children))})'
+
+    def phrase(self):
+        if self.is_leaf:
+            return self.children
+        else:
+            return ' '.join(map(lambda c: c.phrase(), self.children))
+    
+    def findall(self, pos):
+        # 子ノードを持つ場合はすべて検索する
+        if self.is_leaf:
+            nodes = []
+        else:
+            nodes = list(chain(*[n.findall(pos) for n in self.children]))
+        
+        # 自身が合致する場合は、検索結果に追加する
+        if self.pos == pos:
+            nodes.append(self)
+        
+        return nodes
+
+class EnToken:
+    def __init__(self, sentence_id=None, id=None, word=None, lemma=None, pos=None, ner=None):
+        self.sentence_id = sentence_id
+        self.id = id
+        self.word = word
+        self.lemma = lemma
+        self.pos = pos
+        self.ner = ner
+    
+    def __repr__(self):
+        return '\t'.join([self.word, self.lemma, self.pos, self.ner])
+
+class Mention:
+    def __init__(self, sentence_id, start, end, head, text):
+        self.sentence_id = sentence_id
+        self.start = start
+        self.end = end
+        self.head = head
+        self.text = text
+
+class Coreference:
+    def __init__(self, representative, mentions):
+        self.representative = representative
+        self.mentions = mentions
+
+class Dependency:
+    def __init__(self, dtype, governor, dependent):
+        self.dtype = dtype
+        self.governor = governor
+        self.dependent = dependent
+    
+    def __repr__(self):
+        return f'{self.dependent} -{self.dtype}-> {self.governor}'
+
 class Morph:
     '''
     形態素を表すクラス
