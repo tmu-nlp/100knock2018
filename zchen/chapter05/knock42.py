@@ -1,14 +1,15 @@
 from knock41 import *
 
-def show_dep(chunk):
-    h = chunk.head
+def get_dep(chunk):
+    deps = set()
     for c in chunk.dep_by:
-        d = c.head
-        if len(c.dep_by) == 0:
-            d += ' (%s)' % c.m_str().replace('|', ' ')
-        print(h, '<-', d)
-        show_dep(c)
+        deps.add((c, chunk))
+        deps |= get_dep(c)
+    return deps
+
+to_str = lambda chunk: '%s (%s)' % (chunk.func, chunk.m_str(' ', no_punc = True))
 
 if __name__ == '__main__':
-    sents = get_sentence()
-    show_dep(sents[7])
+    sent = get_sentence(neko_sent(int(argv[1])))
+    for i in get_dep(sent):
+        print('%s\t%s' % tuple(map(to_str, i)))

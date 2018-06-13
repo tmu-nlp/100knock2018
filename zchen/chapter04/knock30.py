@@ -13,6 +13,7 @@
 # https://qiita.com/yuichy/items/5c8178e5cc3711386b77
 # not understand: http://parame.mwj.jp/blog/0209
 # user dict: https://qiita.com/hiro0217/items/cfcf801023c0b5e8b1c6
+# at ipadict install: ./configure --with-charset=utf8
 
 from re import compile as regex
 

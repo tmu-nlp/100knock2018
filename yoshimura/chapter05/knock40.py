@@ -19,12 +19,12 @@ def get_morpheme_list():
     表層形(surface)、基本形(base)、品詞(pos)、品詞分類１(pos1)
     をメンバとするクラスを作り、一文ずつでまとめてリストとして返す
 
-    戻り値: 一文ごとのMorphクラスを要素とするリストのリスト
+    return : 一文ごとのMorphクラスを要素とするリスト
     '''
     morpheme = {} 
     sentence = []
     result = []
-    with open('neko.cabocha','r') as neko_file:
+    with open('neko.cabocha_','r') as neko_file:
         for line in neko_file:
             line = line.rstrip() #stripだと先頭の空白文字が消える
             if line != 'EOS' and line[:1] != '*':
