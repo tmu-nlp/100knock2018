@@ -26,6 +26,6 @@ if __name__ == '__main__':
     #     if i < 100:
     #         edge.append((str(dst.phrase_surface()), str(srcs.phrase_surface())))
     #         G.edge(str(dst.phrase_surface()), str(srcs.phrase_surface()))
-    # G.render('binary_tree_graphviz')
+    # G.render('binaryfield_tree_graphviz')
     # g = pydot.graph_from_edges(edge)
     # g.write_jpeg('binary_tree_pydot.png', prog='dot')
