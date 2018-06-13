@@ -31,6 +31,6 @@ if __name__ == '__main__':
 
     with open(arg.file, 'r') as f:
         for line in f:
-            words = line.split('\t')
+            words = line.strip().split('\t')    # stripは基本入れておいたほうがよい
             for i in range(n):
                 outputs[i].write(words[fields[i]] + newline)
