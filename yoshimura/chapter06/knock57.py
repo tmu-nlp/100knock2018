@@ -12,15 +12,14 @@ for sentence in tree.iterfind(path_sentence):
     edges = []
     for dep in sentence.iterfind(path_dep):
         if dep.get('type') != 'punct':
-            gove = dep.find('./governor').text
-            depe = dep.find('./dependent').text
-            edges.append((gove, depe))
+            gove = dep.find('./governor')
+            depe = dep.find('./dependent')
+            edges.append((gove.text + '_' + gove.get('idx'), depe.text + '_' + depe.get('idx')))
 
-    for t in edges:
-        print(t)
+    # for t in edges:
+    #     print(t)
 
     # グラフを描画
     graph = pydot.graph_from_edges(edges, directed=True)
     graph.write_png(f'{sentence_id}.png')
 
-    break
