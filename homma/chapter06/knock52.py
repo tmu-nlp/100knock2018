@@ -7,12 +7,12 @@ def get_stemmed_iter(n=-1):
     for i, word in enumerate(get_word_iter()):
         if i == n:
             break
-        yield stemmer.stemWord(word)
+        yield word, stemmer.stemWord(word)
 
 
 if __name__ == '__main__':
-    for stem in get_stemmed_iter(10):
-        print(stem)
+    for word, stem in get_stemmed_iter(10):
+        print(f'{word}\t{stem}')
 
 
 ''' 問
@@ -23,14 +23,13 @@ Pythonでは，Porterのステミングアルゴリズムの実装としてstemm
 '''
 
 ''' 実行結果
-Natur
-languag
-process
+Natural Natur
+language        languag
+processing      process
 
-From
-Wikipedia
-the
-free
-encyclopedia
-
+From    From
+Wikipedia       Wikipedia
+the     the
+free    free
+encyclopedia    encyclopedia
 '''
