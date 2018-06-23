@@ -1,5 +1,5 @@
 # CoreNLPをダウンロードし展開した後そのディレクトリに移動して、
-# ./corenlp.sh -ssplit.eolonly -annotators tokenize,ssplit,pos,lemma,ner,parse,dcoref -file ../../chapter05/result/knock50.txt -outputDirectory ../../data/
+# ./corenlp.sh -ssplit.eolonly -annotators tokenize,ssplit,pos,lemma,ner,parse,dcoref -file ../../chapter06/result/knock50.txt -outputDirectory ../../data/
 # を実行
 
 import xml.etree.ElementTree as ET
