@@ -96,6 +96,16 @@ class Morph():
         return string + ' ' * (n - len(string) * 2)
 
 
+def load_cabocha_n(n, file='neko.txt.cabocha'):
+    """
+    n文目の係り受け解析結果を返す
+    """
+    for i, chunks in enumerate(load_cabocha_iter(file)):
+        if i >= n - 1:
+            return chunks
+    return None
+
+
 def load_cabocha_iter(file='neko.txt.cabocha'):
     """
     １文ごとに係り受け解析の結果を返す
