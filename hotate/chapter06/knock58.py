@@ -21,12 +21,12 @@ if __name__ == '__main__':
             for pre, sub in nsubj.items():
                 if dobj[pre] != '':
                     l.append(f'{sub}\t{pre}\t{dobj[pre]}')
-                    dobj[pre] = ''
-                else:
-                    l.append(f'{sub}\t{pre}')
-            for pre, obj in dobj.items():
-                if obj != '':
-                    l.append(f'{pre}\t{obj}')
+            #         dobj[pre] = ''
+            #     else:
+            #         l.append(f'{sub}\t{pre}')
+            # for pre, obj in dobj.items():
+            #     if obj != '':
+            #         l.append(f'{pre}\t{obj}')
 
     for s in l:
         print(s)
