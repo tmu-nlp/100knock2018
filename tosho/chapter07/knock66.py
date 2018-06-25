@@ -4,7 +4,7 @@ def main():
 
     db = MusicDb()
     name = input("input artist name: ").strip()
-    found = db.find_artist({"area": name}).count()
+    found = db.collection.find({"area": name}).count()
     print(f'{found} artists found')
 
 if __name__ == '__main__':

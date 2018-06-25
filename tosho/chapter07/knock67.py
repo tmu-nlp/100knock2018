@@ -9,7 +9,7 @@ def main():
     alias_filter = {"aliases.name": name}
     exec_filter = {"$or": [name_filter, alias_filter]}
 
-    for ret in db.find_artist(exec_filter):
+    for ret in db.collection.find(exec_filter):
         print(ret)
 
 if __name__ == '__main__':

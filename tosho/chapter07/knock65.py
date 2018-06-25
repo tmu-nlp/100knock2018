@@ -10,7 +10,7 @@ def main():
 
     db = MusicDb()
     name = input("input artist name: ").strip()
-    for ret in db.find_artist({"name": name}):
+    for ret in db.collection.find({"name": name}):
         print(ret)
 
 if __name__ == '__main__':
