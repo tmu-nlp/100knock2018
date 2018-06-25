@@ -10,22 +10,6 @@ import os, gzip, json, urllib, sys
 from itertools import chain
 import datetime, uuid
 
-class Music:
-    def __init__(self, id, 
-            gid=None, name=None, sort_name=None, area=None, aliases={}, 
-            begin=None, end=None, tags={}, rating=None
-        ):
-        self.id = id
-        self.gid = gid
-        self.name = name
-        self.sort_name = sort_name
-        self.area = area
-        self.aliases = aliases
-        self.begin = begin
-        self.end = end
-        self.tags = tags
-        self.rating = rating
-
 class MusicDb:
     def __init__(self, host='localhost', port=27017, db_name='chapter07'):
         self.host = host
@@ -100,32 +84,6 @@ def main():
             block.append(data)
 
     print(f'{db.artists_count()} artists')
-        
-def parse_one_music(data):
-    attr = {}
-    attr['id'] = data['id']
-    attr['gid'] = data['gid'] if 'gid' in data else None
-    attr['name'] = data['name'] if 'name' in data else None
-    attr['sort_name'] = data['sort_name'] if 'sort_name' in data else None
-    attr['area'] = data['area'] if 'area' in data else None
-    if 'aliases' in data:
-        attr['aliases'] = {}
-        for an, asn in data['aliases']:
-            attr['aliases'][an] = asn
-    if 'begin' in data:
-        date = map(str, data['begin'].values())
-        attr['begin'] = '/'.join(date)
-    if 'end' in data:
-        date = map(str, data['end'].values())
-        attr['end'] = '/'.join(date)
-    if 'tags' in data:
-        attr['tags'] = {}
-        for tv, tc in [(tag['value'], tag['count']) for tag in data['tags']]:
-            attr['tags'][tv] = int(tc)
-    if 'rating' in data:
-        attr['rating'] = data['rating']
-    
-    return attr
 
 def load_music_brainz():
     download_url = 'http://www.cl.ecei.tohoku.ac.jp/nlp100/data/artist.json.gz'
