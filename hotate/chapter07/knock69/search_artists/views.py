@@ -5,9 +5,10 @@ from .function import search_aliases_name, search_area, search_artist, search_ta
 
 def search_artists(request):
     search = request.GET.get('search')
-    limit = int(request.GET.get('limit'))
+    limit = request.GET.get('limit')
     mode = request.GET.get('mode')
-    if search is not None and search is not '':
+    if search:
+        limit = int(limit)
         if mode == 'artist_name':
             context = {
                 'result': search_artist(search, limit),
@@ -19,6 +20,6 @@ def search_artists(request):
         elif mode == 'tag':
             context = {'result': search_tag(search, limit)}
     else:
-        context = {'result': 'o', 'message': 'k'}
+        context = {}
 
     return render(request, 'search_artists/search.html', context)
