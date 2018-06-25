@@ -8,6 +8,7 @@ import os
 import urllib.request
 import json, gzip
 import itertools
+from sys import argv
 
 class Music:
     def __init__(self, name, area):
@@ -15,14 +16,21 @@ class Music:
         self.area = area
 
 def main():
-    r = init_kvs()
+    r = init_kvs(len(argv)>1 and argv[1]=='flushdb')
     print(f'{len(r.keys())} items')
 
-def init_kvs():
+def init_kvs(flushdb=False):
     r = redis.Redis(host='localhost', port=6379, db=0)
-    if len(r.keys()) == 0:
-        for music in load_music_brainz():
-            r.set(music.name, music.area)
+    if flushdb or len(r.keys()) == 0:
+        r.flushdb()
+
+        pipe = r.pipeline()
+        for i, music in enumerate(load_music_brainz()):
+            pipe.set(music.name, music.area)
+            if i % 10000 == 0:
+                pipe.execute()
+                pipe = r.pipeline()
+        pipe.execute()
     return r
 
 def load_music_brainz():
