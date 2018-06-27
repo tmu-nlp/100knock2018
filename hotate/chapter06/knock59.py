@@ -9,22 +9,22 @@ def search_np(str_, list_np):
     tag = match.group(1)
     words = match.group(2)
 
-    d = 0
+    depth = 0
     w = ''
     word_list = []
     for word in words:
         if word == '(':
             w += word
-            d += 1
+            depth += 1
 
         elif word == ')':
             w += word
-            d -= 1
-            if d == 0:
+            depth -= 1
+            if depth == 0:
                 word_list.append(search_np(w, list_np))
                 w = ''
 
-        elif d == 0 and word == ' ':
+        elif depth == 0 and word == ' ':
             continue
         else:
             w += word

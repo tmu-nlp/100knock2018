@@ -66,3 +66,7 @@ if __name__ == '__main__':
         data_in_path = '../data/knock50.txt.xml'
         for line in replace_mention(data_in_path, data_out):
             print(line, file=data_out)
+
+
+
+# filter 関数 で filter(lambda: 式)の式がfalseなら飛ばされる
