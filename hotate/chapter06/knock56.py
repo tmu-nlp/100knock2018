@@ -31,7 +31,7 @@ if __name__ == '__main__':
             mentions.append([
                 int(mention.find('sentence').text) - 1,
                 int(mention.find('start').text) - 1,
-                int(mention.find('end').text) - 2,
+                int(mention.find('end').text) - 1,
                 mention.find('text').text,
                 representative
             ])
@@ -48,7 +48,7 @@ if __name__ == '__main__':
                     break
                 if men_num < len(mentions):
                     if mentions[men_num][0] == sent_num and mentions[men_num][1] == word_num:
-                        f.write(f'{mentions[men_num][4]} ({mentions[men_num][3]}) ')
+                        f.write(f'「{mentions[men_num][4]} ({mentions[men_num][3]})」 ')
                         word_num = mentions[men_num][2]
                         add_num = check_num(mentions, men_num, add=0)
                         men_num += 1 + add_num
