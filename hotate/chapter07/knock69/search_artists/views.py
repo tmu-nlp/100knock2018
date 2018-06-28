@@ -1,5 +1,4 @@
 from django.shortcuts import render
-import requests
 from .function import search_aliases_name, search_area, search_artist, search_tag
 
 
