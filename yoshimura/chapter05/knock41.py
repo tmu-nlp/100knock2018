@@ -21,6 +21,13 @@ class Chunk:
                 n_surface += morph.surface
         return n_surface
     
+    def surface(self):
+        '''表層を返す'''
+        surface = ''
+        for morph in self.morphs:
+            surface += morph.surface
+        return surface
+    
     def check_pos(self, pos):
         '''引数の品詞が含まれているたらTrueを返す'''
         for morph in self.morphs:
@@ -48,7 +55,14 @@ class Chunk:
             if self.morphs[i].pos1 == 'サ変接続' and self.morphs[i + 1].surface == 'を':
                 return self.morphs[i].surface + self.morphs[i+1].surface
         return ''
+    
+    # def __eq__(self, other):
+    #     if other is None or not isinstance(other, Chunk): 
+    #         return False
+    #     return self is other
 
+        
+        
 
 
         

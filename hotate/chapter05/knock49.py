@@ -24,47 +24,11 @@ def extraction_path(sentences):
 
                     if len(j) is not 0:  # 共通の文節が存在する場合
                         path.append(j)
-                        path.append(k)
+                        path.append(k[:1])
                     result.append(path)
                 else:
                     pass
     return result
-
-
-def write_ij(file, line):
-    for i, phrase in enumerate(line[0]):
-        if i == 0:  # 最初の文節
-            x = 'X'
-            file.write(f'{phrase.phrase_surface_xy(x)}')
-        elif i == len(line[0]) - 1:  # 最後の文節
-            file.write('Y')
-        else:
-            file.write(f'{phrase.phrase_surface()}')
-
-        if i < len(line[0]) - 1:
-            file.write(' -> ')
-        else:
-            file.write('\n')
-
-
-def writ_ijk(file, line):
-    for k in range(len(line)):
-        for i, phrase in enumerate(line[k]):
-            if i == 0 and k == 0:
-                x = 'X'
-                file.write(f'{phrase.phrase_surface_xy(x)}')
-            elif i == 0 and k == 1:
-                y = 'Y'
-                file.write(f'{phrase.phrase_surface_xy(y)}')
-            else:
-                file.write(f'{phrase.phrase_surface()}')
-
-            if i < len(line[k]) - 1:
-                file.write(' -> ')
-            elif k != 2:
-                file.write(' | ')
-            else:
-                file.write('\n')
 
 
 def write(file, line):
@@ -76,10 +40,8 @@ def write(file, line):
             elif i == 0 and k == 1:
                 y = 'Y'
                 file.write(f'{phrase.phrase_surface_xy(y)}')
-
             elif len(line) == 1 and i == len(line[0]) - 1:  # 最後の文節
                 file.write('Y')
-
             else:
                 file.write(f'{phrase.phrase_surface()}')
 
@@ -101,7 +63,3 @@ if __name__ == '__main__':
     with open('knock49.txt', 'w') as f:
         for line in result:
             write(f, line)
-            # if len(line) == 1:
-            #     write_ij(f, line)
-            # else:
-            #     writ_ijk(f, line)
