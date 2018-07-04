@@ -25,14 +25,11 @@ def main():
 
 def save_lr_model(lr, file_name='lr.pkl'):
     with open(file_name, 'wb') as f:
-        pkl.dump(lr.get_params(), f)
+        pkl.dump(lr, f)
 
 def load_lr_model(file_name='lr.pkl'):
     with open(file_name, 'rb') as f:
-        p = pkl.load(f)
-        lr = LogisticRegression()
-        lr.set_params(**p)
-        return lr
+        return pkl.load(f)
 
 def load_sentiment_data(feat_map, file_name='sentiment.txt'):
     x, t = [], []
