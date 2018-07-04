@@ -19,16 +19,3 @@ if __name__ == '__main__':
     main()
     # import cProfile
     # cProfile.run('main()')
-
-'''
-('liber', 28) ('1982', -22)
-('engross', 22) ('unless', -21)
-('tape', 21) ("wasn't", -21)
-('award-worthi', 19) ('prettiest', -20)
-('auster', 19) ('clunker', -19)
-('unflinch', 19) ('insubstanti', -19)
-('cave', 18) ('snake', -19)
-('lazier', 18) ('uninspir', -18)
-('batch', 18) ('makhmalbaf', -18)
-('grown', 18) ('ballist', -17)
-'''
