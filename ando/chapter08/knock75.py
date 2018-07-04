@@ -5,5 +5,5 @@ if __name__ == "__main__":
     label,sosei = sosei()
     lr = LogisticRegression()
     lr.fit(sosei,label)
-    print(lr.predict(sosei))
+    print(lr.coef_.tolist()[0])
     
