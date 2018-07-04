@@ -31,6 +31,7 @@ class FeatureMap:
         else:
             self.id_dict = id_dict
         self.stop_words = stop_words
+        self.rev_id_dict = None
 
     def extract_feat_tokens(self, line):
         tokens = []
@@ -59,6 +60,16 @@ class FeatureMap:
         for f in self.extract_feats(line):
             one_hot[f] += 1
         return one_hot
+    
+    def get_feat_token(self, feat_id):
+        if self.rev_id_dict == None:
+            self.rev_id_dict = dict()
+            for k, v in self.id_dict.items():
+                self.rev_id_dict[v] = k
+        if feat_id in self.rev_id_dict:
+            return self.rev_id_dict[feat_id]
+        else:
+            return None
 
 if __name__ == '__main__':
     main()
