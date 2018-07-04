@@ -9,7 +9,7 @@ def main():
     x, t = load_sentiment_data()
     colors = cycle(['aqua', 'darkorange', 'cornflowerblue'])
 
-    critarias = [0.5 * i for i in range(1, 4)]
+    critarias = [0.1 * i for i in range(1, 11)]
 
     for c, color in zip(critarias, colors):
         lr = LogisticRegression(C=c)

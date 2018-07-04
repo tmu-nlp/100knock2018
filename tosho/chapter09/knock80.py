@@ -1,7 +1,10 @@
-from sys import stdin
+from sys import stdin, stderr
 
 def main():
     for i, line in enumerate(stdin):
+        if i % 10000 == 0:
+            stderr.write(f'{i} lines loaded\n')
+
         line = line.rstrip()
         words = line.split()
         ret = []
