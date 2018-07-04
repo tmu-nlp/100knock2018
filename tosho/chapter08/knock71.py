@@ -27,6 +27,8 @@ def main():
 class StopWords(object):
     def __init__(self, file_name='stop_words.txt'):
         *self.words, = [line.split()[0] for line in open(file_name)]
+        # equals to following statement
+        # self.words = list([line.split()[0] for line in open(file_name)])
     
     def is_stop_word(self, word):
         return word in self.words
