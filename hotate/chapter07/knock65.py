@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from pymongo import MongoClient
-import json
 
 
 def search_artist(name):

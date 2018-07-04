@@ -17,6 +17,6 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^search_artists/', include('search_artists.urls')),
+    url(r'^', include('search_artists.urls')),
     url(r'^admin/', admin.site.urls),
 ]

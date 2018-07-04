@@ -5,11 +5,17 @@ import json
 
 client = MongoClient()
 db = client.knock64_db
+db.drop_collection('knock64_collection')
 collection = db.knock64_collection
 
-for line in open('artist.json', 'r'):
+block = []
+for i, line in enumerate(open('artist.json', 'r')):
     artisit_dic = json.loads(line)
-    collection.insert_one(artisit_dic)
+    block.append(artisit_dic)
+    if i % 5000 == 0 and i != 0:
+        collection.insert_many(block)
+        block = []
+collection.insert_many(block)
 
 collection.create_index([('name', pymongo.ASCENDING)])
 collection.create_index([('aliases.name', pymongo.ASCENDING)])
