@@ -31,7 +31,7 @@ def load_lr_model(file_name='lr.pkl'):
     with open(file_name, 'rb') as f:
         return pkl.load(f)
 
-def load_sentiment_data(feat_map, file_name='sentiment.txt'):
+def load_sentiment_data(feat_map=load_feat_map(), file_name='sentiment.txt'):
     x, t = [], []
     for line in open(file_name):
         feat = feat_map.extract_one_hot(line)
