@@ -1,22 +1,64 @@
 from knock71 import StopWords
 from stemming.porter2 import stem
+from collections import defaultdict
+import numpy as np
+import pickle as pkl
 
 def main():
-    test_sent = '+1 I have a pen .'
-    feats = extract_feat(test_sent)
+    stop_word = StopWords()
+    feat_map = FeatureMap(stop_words=stop_word)
+    
+    for line in open('sentiment.txt'):
+        feat_map.learn_feats(line)
+    
+    print(f'{len(feat_map.id_dict)} features learned.')
+    save_feat_map(feat_map)
 
-    print(feats)
+def save_feat_map(feat_map, file_name='feat_map.pkl'):
+    with open(file_name, 'wb') as f:
+        pkl.dump(dict(feat_map.id_dict), f)
 
-def extract_feat(line, stop_words=StopWords()):
-    feat = {}
-    for w in line.rstrip().split():
-        if w == '-1' or w == '+1':
-            continue
-        w = w.lower()
-        w = stem(w)
-        if stop_words.is_stop_word(w) == False:
-            feat[w] = 1
-    return feat
+def load_feat_map(file_name='feat_map.pkl'):
+    with open(file_name, 'rb') as f:
+        id_dict = pkl.load(f)
+        return FeatureMap(id_dict=id_dict)
+
+class FeatureMap:
+    def __init__(self, id_dict={}, stop_words=StopWords()):
+        if len(id_dict) == 0:
+            self.id_dict = defaultdict(lambda:len(self.id_dict))
+            self.id_dict['UNK'] = 0
+        else:
+            self.id_dict = id_dict
+        self.stop_words = stop_words
+
+    def extract_feat_tokens(self, line):
+        tokens = []
+        for w in line.rstrip().split():
+            w = stem(w.lower())
+            if self.stop_words.is_stop_word(w) == False:
+                tokens.append(w)
+        return tokens
+
+    def learn_feats(self, line):
+        for t in self.extract_feat_tokens(line):
+            self.id_dict[t]
+
+    def extract_feats(self, line):
+        feats = []
+        for t in self.extract_feat_tokens(line):
+            if t in self.id_dict:
+                feats.append(self.id_dict[t])
+            else:
+                # unk
+                feats.append(0)
+        return np.array(feats)
+    
+    def extract_one_hot(self, line):
+        one_hot = np.zeros(len(self.id_dict))
+        for f in self.extract_feats(line):
+            one_hot[f] += 1
+        return one_hot
 
 if __name__ == '__main__':
     main()
