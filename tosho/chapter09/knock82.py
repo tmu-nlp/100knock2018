@@ -39,7 +39,7 @@ def main():
                 freq = co_matrix[t_idx, c_idx]
                 stdout.write(f'{t_token}\t{c_token}\t{freq}\n')
 
-def create_co_matrix(vocab_path='vocab.en', matrix_path='co_matrix.csr'):
+def create_co_matrix(vocab_path='vocab.en', matrix_path='co_matrix.lil'):
     vectorizer = joblib.load(vocab_path)
     vocab = vectorizer.vocabulary_
     vocab_size = len(vocab)

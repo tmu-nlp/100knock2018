@@ -5,26 +5,28 @@ from sklearn.externals import joblib
 import numpy as np
 
 def main():
-    vectorizer = joblib.load('vocab.en')
-    M_co = joblib.load('vocab.matrix')
-    N = np.sum(M_co) // 2
+    vec = joblib.load('vocab.en')
+    vocab = vec.vocabulary_
+    co_matrix = joblib.load('co_matrix.lil')
+
+    N = np.sum(co_matrix > 0)
     
     while True:
-        t = input('input token: ').strip()
-        c = input('input context token: ').strip()
-        # t, c = 'types', 'and'
+        trg_word = input('input token: ').strip()
+        ctx_word = input('input context token: ').strip()
+    
+        trg_id = vocab.get(trg_word)
+        ctx_id = vocab.get(ctx_word)
 
-        tx = vectorizer.transform([t])
-        cx = vectorizer.transform([c])
+        print(f't = {trg_word} (id:{trg_id})')
+        print(f'c = {ctx_word} (id:{ctx_id})')
 
-        tx = np.argmax(tx)
-        cx = np.argmax(cx)
+        nt = np.sum(co_matrix[trg_id, ])
+        nc = np.sum(co_matrix.T[ctx_id, ])
 
-        ntc = M_co[tx, cx]
-        nt = np.sum(M_co[tx])
-        nc = np.sum(M_co[cx])
+        ntc = np.sum(co_matrix[trg_id, ctx_id])
 
-        print(f'{ntc} | {nt} | {nc} | {N}')
+        print(f'f(t,c) = {ntc} | f(t,*) = {nt} | f(*,c) = {nc} | N = {N}')
 
 
 if __name__ == '__main__':
