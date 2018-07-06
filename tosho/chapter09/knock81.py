@@ -1,16 +1,15 @@
 from collections import defaultdict
 from sys import stdin, stderr
 
-def main(country_code_file='countries'):    
-    country_dict = defaultdict(dict)
+def main(country_code_file='countries'):
+    country_dict = {}
     for line in open(country_code_file):
         line = line.strip()
         words = line.split()
-        wl = len(words)
-        if wl > 1:
-            country_dict[wl][str(words)] = '_'.join(words)
+        if len(words) > 1:
+            country_dict[tuple(words)] = len(words)
 
-    frames = list(country_dict.keys())
+    frames = set(country_dict.values())
     
     for i, line in enumerate(stdin):
         if i % 10000 == 0:
@@ -24,8 +23,8 @@ def main(country_code_file='countries'):
             ret.append(word)
             for frame in frames:
                 if len(ret) > frame:
-                    sub_words = ret[-frame]
-                    if str(sub_words) in country_dict[frame]:
+                    sub_words = ret[-frame:]
+                    if tuple(sub_words) in country_dict:
                         ret = ret[:-frame]
                         ret.append('_'.join(sub_words))
 
