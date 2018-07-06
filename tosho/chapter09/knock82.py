@@ -5,6 +5,7 @@ python knock82.py co-matrix <wiki.norm.entity.en >knock82.txt
 }
 '''
 
+import os
 from sys import stdin, stdout, stderr
 from argparse import ArgumentParser
 from random import randint
@@ -44,31 +45,34 @@ def create_co_matrix(vocab_path='vocab.en', matrix_path='co_matrix.lil'):
     vocab = vectorizer.vocabulary_
     vocab_size = len(vocab)
 
-    co_matrix = lil_matrix((vocab_size, vocab_size), dtype=np.uint8)
-    for t, tokens in enumerate(load_tokenized_doc(vocab.get)):
-        if t % 1000 == 0:
-            stderr.write(f'{t} line proceeded\n')
-        
-        sent_size = len(tokens)
-        for idx, token in enumerate(tokens):
-            # stop words が None になるため。
-            if token is None:
-                continue
+    if os.path.exists(matrix_path):
+        co_matrix = joblib.load(matrix_path)
+    else:
+        co_matrix = lil_matrix((vocab_size, vocab_size), dtype=np.uint8)
+        for t, tokens in enumerate(load_tokenized_doc(vocab.get)):
+            if t % 1000 == 0:
+                stderr.write(f'{t} line proceeded\n')
+            
+            sent_size = len(tokens)
+            for idx, token in enumerate(tokens):
+                # stop words が None になるため。
+                if token is None:
+                    continue
 
-            window = randint(1, 5)
-            for dd in range(1, window+1):
-                li = idx - dd
-                ri = idx + dd
+                window = randint(1, 5)
+                for dd in range(1, window+1):
+                    li = idx - dd
+                    ri = idx + dd
 
-                if li >= 0:
-                    l_token = tokens[li]
-                    if l_token is not None:
-                        co_matrix[token, l_token] += 1
-                if ri < sent_size:
-                    r_token = tokens[ri]
-                    if r_token is not None:
-                        co_matrix[token, r_token] += 1
-    joblib.dump(co_matrix, matrix_path)
+                    if li >= 0:
+                        l_token = tokens[li]
+                        if l_token is not None:
+                            co_matrix[token, l_token] += 1
+                    if ri < sent_size:
+                        r_token = tokens[ri]
+                        if r_token is not None:
+                            co_matrix[token, r_token] += 1
+        joblib.dump(co_matrix, matrix_path)
     
     return co_matrix, vectorizer
 
