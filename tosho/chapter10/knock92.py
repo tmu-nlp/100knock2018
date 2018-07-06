@@ -111,15 +111,15 @@ class Count2Vec:
     def get_wv(self, word):
         word_id = self.vocab.get(word)
         if word_id is None:
-            self.print(f'word "{word}" is not found.')
-            return None
+            # self.print(f'word "{word}" is not found.')
+            return np.zeros(self.size)
         else:
             return self.pca_matrix[word_id,].reshape(self.size)
     
     def get_word(self, word_idx):
         word = self.inverse_vocab.get(word_idx)
         if word is None:
-            self.print(f'id "{word_idx}" is not found.')
+            # self.print(f'id "{word_idx}" is not found.')
             return None
         else:
             return word
@@ -177,30 +177,45 @@ def main():
         c2v.save(c2v_path)
         sys.stderr.write('Done\n')
 
-    # gold_ans = []
-    # w2v_ans = []
-    # c2v_ans = []
-    # for line in sys.stdin:
-    #     capital1, country1, capital2, country2 = line.strip().split()
-        
-    #     w2v_trg_vec = w2v.wv[country1] - w2v.wv[capital1] + w2v.wv[capital2]
-    #     w2v_near_word = w2v.most_similar(positive=[w2v_trg_vec], topn=1)[0]
-    #     c2v_trg_vec = c2v.get_wv(country1) - c2v.get_word(capital1) + c2v.get_word(capital2)
-    #     c2v_near_word = c2v.most_similar(word_or_vec=c2v_trg_vec, topn=1)[0]
+    sys.stderr.write(f'{len(c2v.vocab)} words in {c2v_path}\n')
+    sys.stderr.write(f'{len(w2v.wv.vocab)} words in {w2v_path}\n')
 
-    #     print(*[
-    #         capital1, country1, capital2, country2,
-    #         w2v_near_word[0], w2v_near_word[1],
-    #         c2v_near_word[0], c2v_near_word[1],
-    #     ])
+    gold_ans = 0
+    w2v_ans = 0
+    c2v_ans = 0
+    for i, line in enumerate(sys.stdin):
+        if i % 1000 == 0:
+            sys.stderr.write(f'{i} items processed.\n')
 
-    #     gold_ans.append(country2)
-    #     w2v_ans.append(w2v_near_word[0])
-    #     c2v_ans.append(c2v_near_word[0])
+        capital1, country1, capital2, country2 = line.strip().split()
+
+        try:
+            w2v_trg_vec = w2v.wv[country1] - w2v.wv[capital1] + w2v.wv[capital2]
+            w2v_near_word = w2v.most_similar(positive=[w2v_trg_vec], topn=1)[0]
+        except:
+            w2v_near_word = ['ERROR', -1.]
+
+        try:
+            c2v_trg_vec = c2v.get_wv(country1) - c2v.get_wv(capital1) + c2v.get_wv(capital2)
+            c2v_near_word = c2v.most_similar(word_or_vec=c2v_trg_vec, topn=1)[0]
+        except:
+            c2v_near_word = ['ERROR', -1.]
+
+        print(*[
+            capital1, country1, capital2, country2,
+            w2v_near_word[0], w2v_near_word[1],
+            c2v_near_word[0], c2v_near_word[1],
+        ])
+
+        gold_ans += 1
+        if w2v_near_word[0] == country2:
+            w2v_ans += 1
+        if c2v_near_word[0] == country2:
+            c2v_ans += 1
     
-    # w2v_acc = np.sum(gold_ans == w2v_ans) / len(gold_ans)
-    # c2v_acc = np.sum(gold_ans == c2v_ans) / len(gold_ans)
-    # print(f'ACC(word2vec): {w2v_acc:.2f} | ACC(count2vec): {c2v_acc:.2f}')
+    w2v_acc = w2v_ans / gold_ans
+    c2v_acc = c2v_ans / gold_ans
+    sys.stderr.write(f'ACC(word2vec): {w2v_acc:.2f} | ACC(count2vec): {c2v_acc:.2f}\n')
 
 if __name__ == '__main__':
     main()
