@@ -15,7 +15,7 @@ def main():
         model = word2vec.Word2Vec.load(model_path)
     else:
         sentences = word2vec.LineSentence(data_path)
-        model = word2vec.Word2Vec(sentences)
+        model = word2vec.Word2Vec(sentences, size=300)
         model.save(model_path)
     
     # knock 86
