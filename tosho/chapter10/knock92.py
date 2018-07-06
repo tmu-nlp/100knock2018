@@ -145,6 +145,14 @@ class Count2Vec:
         
         return topn_words
 
+    def similarity(self, a, b):
+        vec_a = self.get_wv(a)
+        vec_b = self.get_wv(b)
+
+        sim = np.dot(vec_a, vec_b)
+
+        return sim
+
     def save(self, filename='model.c2v'):
         joblib.dump([self.size, self.window, self.min_count, self.vectorizer, self.pca_matrix], filename)
     
