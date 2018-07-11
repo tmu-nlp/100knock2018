@@ -8,7 +8,7 @@ def main():
     vocab = vec.vocabulary_
 
     while True:
-        query = input('input word: ').strip()
+        query = input('input word: ').strip().lower()
         query = query.replace(' ', '_')
         token_idx = vocab.get(query)
 
