@@ -18,7 +18,7 @@ stemmer = snowballstemmer.stemmer('english')
 def hypothesis(data_x,theta):
     return 1.0 / (1.0 + np.exp(-data_x.dot(theta)))
 
-def cost(data_x,theta,data_y):
+def cost(data_x,theta,data_y):#data_y is 正解ラベル
     m = data_y.size
     h = hypothesis(data_x,theta) #data_yの予測値の行列
     j = 1/m * np.sum(-data_y * np.log(h) -(np.ones(m)-data_y) * np.log(np.ones(m) - h))  #data_xに対して予測した結果と正解との差を算出
@@ -31,7 +31,7 @@ def gradient(data_x,theta,data_y):
     return grad
 
 def extract_features(data,dict_features):
-    data_one_x = np.zeros(len(dict_features)+1, dtype=np.float64)
+    data_one_x = np.zeros(len(dict_features)+1, dtype=np.float64)#一つのレビューに対して
     data_one_x[0] = 1
     for word in data.split(' '):
         word = word.strip()
@@ -61,8 +61,8 @@ def create_training_set(sentiments,dict_features):
     return data_x,data_y
 
 def learn(data_x,data_y,alpha,count):
-    theta = np.zeros(data_x.shape[1])
-    c = cost(data_x,theta,data_y)
+    theta = np.zeros(data_x.shape[1]) 
+    c = cost(data_x,theta,data_y) #誤差
     print('\t学習開始\tcost：{}'.format(c))
     for i in range(1,count + 1):
         grad = gradient(data_x,theta,data_y)

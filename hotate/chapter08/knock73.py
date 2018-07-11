@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from knock72 import tfidf_vectorizer, fit_vectorize
-from collections import defaultdict
 import random
 from sklearn.externals import joblib
 import numpy as np
@@ -8,7 +7,6 @@ from sklearn.linear_model import LogisticRegression
 
 
 def train():
-    ids = defaultdict(lambda: len(ids))
     vectorizer = tfidf_vectorizer()
     data_x, data_y = make_data_x_y()
     train_x, train_y = make_train_data(vectorizer, data_x, data_y)

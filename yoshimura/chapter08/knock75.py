@@ -8,7 +8,7 @@ import pickle
 with open('model', 'rb') as f:
     model = pickle.load(f)
 
-# vocavをロード
+# vocabをロード
 with open('vocab', 'rb') as f:
     vocab = pickle.load(f)
 
@@ -18,12 +18,12 @@ for i, w in enumerate(model.coef_.tolist()[0]):
     weight.append((i, w))
 weight = sorted(weight, key=lambda x: x[1])
 
-# 重みの低い素性トップ10
-print('-----low top10-----')
+# 重みの高い素性トップ10
+print('-----high top10-----')
 for taple in weight[:10]:
     print(vocab[taple[0]])
 
-# 重みの高い素性トップ10
-print('-----high top10-----')
-for taple in weight[-10:]:
+# 重みの低い素性トップ10
+print('-----low top10-----')
+for taple in weight[:-10:-1]:
     print(vocab[taple[0]])
