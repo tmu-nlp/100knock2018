@@ -9,7 +9,7 @@ def main():
     vocab = vec.vocabulary_
     co_matrix = joblib.load('co_matrix.lil')
 
-    N = np.sum(co_matrix > 0)
+    N = np.sum(co_matrix)
     
     while True:
         trg_word = input('input token: ').strip()
