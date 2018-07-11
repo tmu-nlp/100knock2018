@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from sklearn.externals import joblib
-from knock73 import  make_data_x_y
+from knock73 import make_data_x_y
 
 
 def pred_label(n):
