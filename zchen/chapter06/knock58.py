@@ -15,10 +15,10 @@ def extract_type(sentences):
 
         for  (px, cx, typex) in tokens:
             if typex == "nsubj":
-                print(f"{typex}: {px} <- {cx}")
 
                 for (py, cy, typey) in tokens:
-                    if px == cy:
+                    if px == cy:# and typey == 'dobj':
+                        print(f"{typex}: {px} <- {cx}")
                         print(f"  dobj({typey}): {py} <- {cy}")
 
 
