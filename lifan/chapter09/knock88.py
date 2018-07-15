@@ -14,6 +14,9 @@ matrix_x300 = joblib.load(PPMIS_PKL)
 dict_index_t = joblib.load(DICT_INDEX_T_PKL)
 
 vec_a = matrix_x300[dict_index_t['United_States']]
-vec_b = matrix_x300[dict_index_t['U.S']]
 
-print(cos_sim(vec_a, vec_b))
+distances = [ cos_similarity(vec_a, matrix_x300[i]) for i in range(0, len(dict_index_t)) ]
+idx_sorted = np.argsort(distances)
+keys = list(dict_index_t.keys())
+for index in idx_sorted[-2:-12:-1]:
+	print(f'{keys[index]}\t{distances[index]}')

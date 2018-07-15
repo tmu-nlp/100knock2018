@@ -11,9 +11,9 @@ def main():
     indices = np.array(list(vec.vocabulary_.values()))
     inverse_vocab = terms[np.argsort(indices)]
     
-    w1_idx = vocab.get('image')
-    w2_idx = vocab.get('vast')
-    w3_idx = vocab.get('serious')
+    w1_idx = vocab.get('Spain')
+    w2_idx = vocab.get('Madrid')
+    w3_idx = vocab.get('Athens')
 
     trg_vec = pca_matrix[w1_idx,] - pca_matrix[w2_idx, ] + pca_matrix[w3_idx, ]
     sim_matrix = np.dot([trg_vec], pca_matrix.T)

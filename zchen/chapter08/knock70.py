@@ -19,6 +19,6 @@ def make_data():
     data = pos + neg
     shuffle(data)
     return data
-    
-                
+
+
 m = make_data()

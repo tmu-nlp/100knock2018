@@ -9,8 +9,8 @@ def main():
     vocab = vec.vocabulary_
 
     while True:
-        query1 = input('input word 1: ').strip().replace(' ', '_')
-        query2 = input('input word 2: ').strip().replace(' ', '_')
+        query1 = input('input word 1: ').strip().replace(' ', '_').lower()
+        query2 = input('input word 2: ').strip().replace(' ', '_').lower()
 
         query1_idx = vocab.get(query1)
         query2_idx = vocab.get(query2)

@@ -1,6 +1,7 @@
 from sklearn.externals import joblib
 import numpy as np
 from scipy.sparse import lil_matrix
+from tqdm import tqdm
 
 def main():
     vec = joblib.load('vocab.en')
@@ -15,7 +16,7 @@ def main():
 
     rows, cols = (co_matrix >= 10).nonzero()
     removed = 0
-    for row, col in zip(rows, cols):
+    for row, col in tqdm(zip(rows, cols),total=len(rows)):
         ntc = co_matrix[row, col].item()
         nt = nt_matrix[row].item()
         nc = nc_matrix[col].item()
