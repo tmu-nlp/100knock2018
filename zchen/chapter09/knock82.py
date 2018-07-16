@@ -81,10 +81,10 @@ def save_to():
         docs += ' '.join(combine_compound(toks, trie)) + '\n'
 
     with bz2.open(TEXT_PATH, 'wb') as fw:
-        fw.write((s).encode('utf-8'))
+        fw.write((docs).encode('utf-8'))
 
     cv = CountVectorizer(stop_words = []) # None doesn't work
-    cv.fit(docs) # we don't need _transform()
+    cv.fit(docs.split('\n')) # we don't need _transform()
     joblib.dump(cv, VOCAB_PATH)
 
 def mp(tup):
@@ -100,7 +100,8 @@ def mp(tup):
 
 def make_cooc_mat(num_procs = 4):
     cv = joblib.load(VOCAB_PATH)
-    pool = Pool(num_procs)
+    if num_procs > 1:
+        pool = Pool(num_procs)
     analyzer = cv.build_analyzer()
     vocab = cv.vocabulary_
     dim = len(cv.vocabulary_)
@@ -112,6 +113,9 @@ def make_cooc_mat(num_procs = 4):
     for line in bz2_line_gen(TEXT_PATH):
         if len(sub_lines) < 10000:
             sub_lines.append(line)
+        elif num_procs == 1:
+            cooc_mat += mp((0, shared_params, sub_lines))
+            sub_lines = []
         elif len(sub_blocks) < num_procs:
             sub_blocks.append((len(sub_blocks), shared_params, sub_lines))
             sub_lines = []
@@ -120,6 +124,11 @@ def make_cooc_mat(num_procs = 4):
                 cooc_mat += cooc
             sub_blocks = []
             print('block')
+    if sub_lines:
+        cooc_mat += mp((0, shared_params, sub_lines))
+    for sub_lines in sub_blocks:
+        cooc_mat += mp((0, shared_params, sub_lines))
+    print(np.sum(cooc_mat))
     joblib.dump(cooc_mat, COOC_MAT_PATH)
 
 def _test0():
@@ -139,6 +148,6 @@ if __name__ == '__main__':
     if args.mode == 'vocab':
         save_to()
     elif args.mode == 'mat':
-        make_cooc_mat()
+        make_cooc_mat(1)
     #import cProfile
     #cProfile.run('')
