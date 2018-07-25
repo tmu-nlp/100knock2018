@@ -13,6 +13,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.externals import joblib
 import numpy as np
 from scipy.sparse import lil_matrix
+from tqdm import tqdm
 
 def main():
     parser = ArgumentParser()
@@ -49,10 +50,7 @@ def create_co_matrix(vocab_path='vocab.en', matrix_path='co_matrix.lil'):
         co_matrix = joblib.load(matrix_path)
     else:
         co_matrix = lil_matrix((vocab_size, vocab_size), dtype=np.uint8)
-        for t, tokens in enumerate(load_tokenized_doc(vocab.get)):
-            if t % 1000 == 0:
-                stderr.write(f'{t} line proceeded\n')
-            
+        for tokens in load_tokenized_doc(vocab.get):
             sent_size = len(tokens)
             for idx, token in enumerate(tokens):
                 # stop words が None になるため。
@@ -77,7 +75,7 @@ def create_co_matrix(vocab_path='vocab.en', matrix_path='co_matrix.lil'):
     return co_matrix, vectorizer
 
 def load_tokenized_doc(vocab, doc=stdin):
-    for line in doc:
+    for line in tqdm(doc):
         words = line.strip().split()
         *tokenized, = [vocab(w.lower()) for w in words]
         yield tokenized
