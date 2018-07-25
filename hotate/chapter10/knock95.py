@@ -22,6 +22,8 @@ def rank(path):
         else:
             l = []
             line = line.strip().split()
+            if line[3] == 'nan':
+                continue
             l.append(float(line[2]))
             l.append(float(line[3]))
             rank_.append(l)
@@ -39,6 +41,7 @@ def main():
     rank_pred_90 = rank('knock94_90.txt')
     n = len(rank_pred_85[:, -2])
     print(spearman(n, dif_rank(rank_pred_85[:, -2], rank_pred_85[:, -1])))
+    n = len(rank_pred_90[:, -2])
     print(spearman(n, dif_rank(rank_pred_90[:, -2], rank_pred_90[:, -1])))
 
 
