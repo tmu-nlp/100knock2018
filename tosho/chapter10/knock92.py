@@ -149,7 +149,8 @@ class Count2Vec:
         vec_a = self.get_wv(a)
         vec_b = self.get_wv(b)
 
-        sim = np.dot(vec_a, vec_b)
+        sim = np.dot(vec_a, vec_b) / \
+            (np.linalg.norm(vec_a) * np.linalg.norm(vec_b))
 
         return sim
 
