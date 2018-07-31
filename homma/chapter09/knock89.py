@@ -17,7 +17,7 @@ def main():
     t_list = list(t_id)
     sims = [(cos_sim(v, ppmi_mat_300[i]), t_list[i]) for i in range(len(t_id))]
     # 上位十件表示
-    for sim, word in sorted(sims)[-2:-12:-1]:
+    for sim, word in sorted(sims)[-1:-21:-1]:
         print(f'{word}\t{sim}')
 
 
@@ -34,6 +34,7 @@ vec("Spain") - vec("Madrid") + vec("Athens")を計算し，
 '''
 
 ''' 実行結果
+Spain   0.8731749500714772
 Sweden  0.7524476293688583
 Italy   0.7477475975723662
 Austria 0.7300480323684855
@@ -43,9 +44,9 @@ Britain 0.6840547453815037
 Rome    0.6792591037321769
 Russia  0.6754670770777806
 Denmark 0.6629304942473591
-France  0.6614311631334332
 
 (上位20件)
+Spain   0.8731749500714772
 Sweden  0.7524476293688583
 Italy   0.7477475975723662
 Austria 0.7300480323684855
@@ -58,12 +59,11 @@ Denmark 0.6629304942473591
 France  0.6614311631334332
 Belgium 0.6599625504961247
 Poland  0.6505326645468077
-Greece  0.63523971907823    ◯
+Greece  0.63523971907823  ◯
 Berlin  0.6211483459775878
 Athens  0.6208427535245976
 Japan   0.6187330625138061
 Ireland 0.6183130019203915
 United_Kingdom  0.6160394291549862
 fought  0.6113180150236501
-USA     0.6037415870668746
 '''

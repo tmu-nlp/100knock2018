@@ -11,7 +11,8 @@ def main():
         wv = KeyedVectors.load(model_path)
     else:
         sentences = word2vec.LineSentence(source_path)
-        model = word2vec.Word2Vec(sentences, size=300)
+        # model = word2vec.Word2Vec(sentences, size=300)
+        model = word2vec.Word2Vec(sentences, size=100, min_count=1)
         model.wv.save(model_path)
         wv = model.wv
 
@@ -20,8 +21,10 @@ def main():
     print('knock88')
     pprint(wv.most_similar('England'))
     print('knock89')
-    vec = wv['Spain'] - wv['Madrid'] + wv['Athens']
-    pprint(wv.most_similar([vec]))
+    # vec = wv['Spain'] - wv['Madrid'] + wv['Athens']
+    # pprint(wv.most_similar([vec]))
+    pprint(wv.most_similar(positive=['Spain', 'Athens'], negative=['Madrid']))
+    # positive と negative に入れることで1行で動かせる
 
 
 if __name__ == '__main__':
@@ -36,8 +39,6 @@ if __name__ == '__main__':
 '''
 
 ''' 実行結果
-C:\Users\qavio\Anaconda3\lib\site-packages\gensim\utils.py:1209: UserWarning: detected Windows; aliasing chunkize to chunkize_serial
-  warnings.warn("detected Windows; aliasing chunkize to chunkize_serial")
 knock86
  [ -1.20743847e+00  -4.09069099e-02   3.11730713e-01   1.06156838e+00
   -1.27329779e+00   3.85945737e-01  -9.29421127e-01  -1.28361419e-01

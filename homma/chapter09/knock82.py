@@ -7,7 +7,7 @@ def get_contexts(words, i):
     clamp = lambda x: max(0, min(len(words), x))
     d = random.randint(1, 5)
     left = words[clamp(i - d):i]
-    right = words[clamp(i + 1):clamp(i + d + 1)]
+    right = words[clamp(i + 1):i + d + 1]
     return ' '.join(left + right)
 
 

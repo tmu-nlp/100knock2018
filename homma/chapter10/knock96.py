@@ -13,7 +13,7 @@ def main():
     vec = []
     idx = 0
     for line in open(countries_path, encoding='utf8'):
-        country = line.strip()
+        country = line.strip().replace(' ', '_')
         try:
             vec.append(wv[country])
             country_dic[idx] = country

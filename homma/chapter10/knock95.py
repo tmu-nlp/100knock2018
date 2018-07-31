@@ -1,9 +1,9 @@
+from scipy.stats import spearmanr
 
-
-def spearman(list1, list2):
-    N = len(list1)
-    sumD2 = sum((a - b) ** 2 for a, b in zip(list1, list2))
-    return 1 - 6 * sumD2 / (N ** 3 - N)
+# def spearman(list1, list2):
+#     N = len(list1)
+#     sumD2 = sum((a - b) ** 2 for a, b in zip(list1, list2))
+#     return 1 - 6 * sumD2 / (N ** 3 - N)
 
 
 def read_calc_spearman(path):
@@ -17,7 +17,8 @@ def read_calc_spearman(path):
         m = 0 if line[3] == '-' else float(line[3])
         human.append(h)
         machine.append(m)
-    return spearman(human, machine)
+    return spearmanr(human, machine).correlation
+    # return spearman(human, machine)
 
 
 def main():
@@ -27,6 +28,8 @@ def main():
     print(read_calc_spearman(data_path_85))
     print('#90')
     print(read_calc_spearman(data_path_90))
+    # scipyにspearmanがある
+    # ランクをいれなきゃいけない
 
 
 if __name__ == '__main__':

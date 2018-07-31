@@ -1,6 +1,6 @@
 import pickle
 from scipy import io
-from sklearn.decomposition import TruncatedSVD
+from sklearn.decomposition import PCA
 # https://stackoverflow.com/questions/33603787/performing-pca-on-large-sparse-matrix-by-using-sklearn
 
 
@@ -8,8 +8,10 @@ def main():
     # 読み込み
     ppmi_mat = io.loadmat('ppmi_mat')['ppmi_mat']
     # 次元圧縮
-    pca = TruncatedSVD(n_components=300)
-    ppmi_mat_300 = pca.fit_transform(ppmi_mat)
+    # pca = TruncatedSVD(n_components=300)
+    pca = PCA(n_components=300)
+    # ppmi_mat_300 = pca.fit_transform(ppmi_mat) # ppmi_mat.todense()でやればPCAでできる
+    ppmi_mat_300 = pca.fit_transform(ppmi_mat.todense())
     # 保存
     io.savemat('knock85_300', {'ppmi_mat_300': ppmi_mat_300})
 

@@ -1,7 +1,7 @@
 import pickle
 import matplotlib.pyplot as plt
-from gensim.models import KeyedVectors
-from scipy.cluster.hierarchy import linkage, dendrogram
+# from scipy.cluster.hierarchy import linkage, dendrogram
+from scipy.cluster.hierarchy import ward, dendrogram
 
 
 def main():
@@ -9,7 +9,9 @@ def main():
     with open(data_path, 'rb') as f:
         ids = pickle.load(f)
         vec = pickle.load(f)
-    Z = linkage(vec, method='ward')
+    # Z = linkage(vec, method='ward')
+    # ward法でクラスタリングする ward がある
+    Z = ward(vec)
     plt.figure()
     dendrogram(Z, labels=list(ids.values()))
     plt.show()
